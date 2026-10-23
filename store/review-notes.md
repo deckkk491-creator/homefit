@@ -25,6 +25,9 @@ Data and privacy:
 - All user data (questionnaire answers, plan, log) is stored only in local storage on the device. Nothing is collected or transmitted, so the App Privacy answer is "Data Not Collected".
 - No ads, no analytics, no tracking, no in-app purchases.
 
+Notifications:
+- When the user marks a set, a rest timer starts. The first time, the app asks for notification permission so it can show a LOCAL "Rest is over" notification if the phone is locked. No remote push, no push tokens. If permission is denied, the timer still works on screen.
+
 Content:
 - Exercise photos and instructions come from free-exercise-db (https://github.com/yuhonas/free-exercise-db), released into the public domain (Unlicense).
 
@@ -42,5 +45,6 @@ Contact: deckkk491@gmail.com
 - [ ] Every equipment option produces a working plan (no empty screens).
 - [ ] The app works offline (or, if photos are downloaded, shows a placeholder without a connection).
 - [ ] Privacy Policy URL and Support URL open on a phone.
+- [ ] Notification permission is asked only when the first rest timer starts, not at launch.
 - [ ] No placeholder text, "lorem ipsum" or debug buttons in the build (Guideline 2.1).
 - [ ] If the app does not use HealthKit, the description doesn't mention it (it doesn't).

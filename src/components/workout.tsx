@@ -5,6 +5,7 @@ import { Image, Pressable, StyleSheet, View } from 'react-native';
 
 import { Row, T } from '@/components/ui';
 import { EXERCISE_IMAGES } from '@/data/exerciseImages';
+import { cancelRestEnd, scheduleRestEnd } from '@/lib/restNotification';
 import { radius, space, type as typo, useTheme } from '@/theme';
 
 export function ExerciseThumb({ id, size = 64 }: { id: string; size?: number }) {
@@ -85,6 +86,13 @@ export function RestTimer({
     setLeft(seconds);
     buzzed.current = false;
   }, [startKey, seconds]);
+
+  // Уведомление на случай, если телефон заблокирован или открыто другое приложение.
+  // Переносится при «+15» и при новом старте, отменяется при закрытии таймера.
+  useEffect(() => {
+    scheduleRestEnd(endAt);
+  }, [endAt]);
+  useEffect(() => () => void cancelRestEnd(), []);
 
   useEffect(() => {
     // Интервал очищается при размонтировании, смене endAt и как только отдых закончился.
