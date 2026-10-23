@@ -26,6 +26,28 @@ const levelRank = (l: Level) => LEVELS.indexOf(l);
 
 // ───────────────────────── Профиль ─────────────────────────
 
+const finiteOr = (v: unknown, fallback: number) => (typeof v === 'number' && Number.isFinite(v) ? v : fallback);
+const clampNum = (v: unknown, min: number, max: number, fallback: number) =>
+  Math.max(min, Math.min(max, finiteOr(v, fallback)));
+
+/** Приводит профиль к допустимым диапазонам (защита от старых/повреждённых данных). */
+export function sanitizeProfile(p: Profile): Profile {
+  const e = p.equipment;
+  return {
+    ...p,
+    age: clampNum(p.age, 14, 90, 30),
+    heightCm: clampNum(p.heightCm, 120, 230, 175),
+    weightKg: clampNum(p.weightKg, 35, 250, 75),
+    maxPushups: Math.round(clampNum(p.maxPushups, 0, 150, 0)),
+    maxPullups: e.pullupBar ? Math.round(clampNum(p.maxPullups, 0, 60, 0)) : 0,
+    equipment: {
+      ...e,
+      dumbbells: { ...e.dumbbells, weightKg: clampNum(e.dumbbells.weightKg, 0, 60, 0) },
+      barbell: { ...e.barbell, maxKg: clampNum(e.barbell.maxKg, 0, 300, 0) },
+    },
+  };
+}
+
 export function bmi(p: Pick<Profile, 'heightCm' | 'weightKg'>): number {
   const h = p.heightCm / 100;
   if (!h || !p.weightKg) return 0;
@@ -149,6 +171,9 @@ export function suggestWeight(ex: Exercise, p: Profile, level: Level): number | 
   return null;
 }
 
+/** Максимальный диапазон повторений для упражнений «от максимума». */
+export const REPS_CAP = { pushups: [20, 30], pullups: [10, 15] } as const;
+
 export function planExercise(ex: Exercise, p: Profile, level: Level): PlannedExercise {
   const compound = COMPOUND.includes(ex.pattern);
   const sc = scheme(p.goal, level, compound);
@@ -164,8 +189,10 @@ export function planExercise(ex: Exercise, p: Profile, level: Level): PlannedExe
     ][lr] as [number, number];
   } else if (ex.repsFrom) {
     const max = ex.repsFrom === 'pushups' ? p.maxPushups : p.maxPullups;
-    repsMin = Math.max(ex.repsFrom === 'pullups' ? 1 : 3, Math.round(max * 0.5));
-    repsMax = Math.max(repsMin + 1, Math.round(max * 0.75));
+    // Потолок: 40+ отжиманий не превращаются в подходы по 80 — дальше нужен более сложный вариант.
+    const [capMin, capMax] = REPS_CAP[ex.repsFrom];
+    repsMin = Math.min(capMin, Math.max(ex.repsFrom === 'pullups' ? 1 : 3, Math.round(max * 0.5)));
+    repsMax = Math.min(capMax, Math.max(repsMin + 1, Math.round(max * 0.75)));
     note = 'Повторения подобраны от твоего максимума. Оставляй 1–2 повторения «в запасе».';
   } else if (ex.loadType === 'bodyweight' || ex.loadType === 'band') {
     // Без внешнего веса прогресс идёт через повторы.
@@ -370,13 +397,41 @@ function tipsFor(level: Level, goal: Goal): string[] {
   return tips;
 }
 
-export function generatePlan(p: Profile, days: Weekday[], now: Date = new Date()): Plan {
-  const sortedDays = [...new Set(days)].sort((a, b) => a - b) as Weekday[];
-  const level = computeLevel(p);
-  const gear = availableGear(p);
-  const split = chooseSplit(sortedDays.length);
+/** Меньше упражнений в тренировке — сплит не подходит под инвентарь/уровень. */
+export const MIN_EXERCISES = 4;
+
+/**
+ * Запасной сплит для 4–6 дней: тренировки на всё тело A/B/C по кругу.
+ * Каждую неделю порядок сдвигается, чтобы нагрузка распределялась равномерно.
+ */
+export function fullBodyFallback(dayCount: number): Split {
+  const cycle = ['FA', 'FB', 'FC'];
+  const rotation = cycle.map((_, week) => Array.from({ length: dayCount }, (_, i) => cycle[(week * dayCount + i) % 3]));
+  return { name: 'Всё тело A/B/C', templates: cycle, rotation };
+}
+
+function buildAll(split: Split, p: Profile, level: Level, gear: Set<Gear>): Record<string, WorkoutTemplate> {
   const workouts: Record<string, WorkoutTemplate> = {};
   for (const key of split.templates) workouts[key] = buildWorkout(T[key], p, level, gear);
+  return workouts;
+}
+
+export function generatePlan(profile: Profile, days: Weekday[], now: Date = new Date()): Plan {
+  const p = sanitizeProfile(profile);
+  const valid = days.filter((d) => Number.isInteger(d) && d >= 0 && d <= 6);
+  let sortedDays = [...new Set(valid)].sort((a, b) => a - b) as Weekday[];
+  if (sortedDays.length < MIN_DAYS) sortedDays = RECOMMENDED_DAYS;
+  if (sortedDays.length > MAX_DAYS) sortedDays = sortedDays.slice(0, MAX_DAYS);
+  const level = computeLevel(p);
+  const gear = availableGear(p);
+  let split = chooseSplit(sortedDays.length);
+  let workouts = buildAll(split, p, level, gear);
+  // Без инвентаря новичку на сплите «жимы/тяги» или «верх/низ» может достаться 2 упражнения
+  // на тренировку — тогда честнее тренировать всё тело A/B/C.
+  if (sortedDays.length >= 4 && Object.values(workouts).some((w) => w.exercises.length < MIN_EXERCISES)) {
+    split = fullBodyFallback(sortedDays.length);
+    workouts = buildAll(split, p, level, gear);
+  }
   return {
     level,
     goal: p.goal,
@@ -402,8 +457,8 @@ function mondayOf(d: Date): number {
   return x.getTime();
 }
 
-export function weekIndex(plan: Pick<Plan, 'createdAt'>, date: Date): number {
-  const diff = mondayOf(date) - mondayOf(new Date(plan.createdAt));
+export function weekIndex(plan: Pick<Plan, 'createdAt' | 'weekAnchor'>, date: Date): number {
+  const diff = mondayOf(date) - mondayOf(new Date(plan.weekAnchor ?? plan.createdAt));
   return Math.max(0, Math.round(diff / (7 * 24 * 3600 * 1000)));
 }
 

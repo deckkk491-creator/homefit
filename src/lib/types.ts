@@ -103,6 +103,8 @@ export interface Plan {
   level: Level;
   goal: Goal;
   createdAt: string;
+  /** Начало отсчёта недель (ISO). Сохраняется при пересоздании плана, чтобы не сбрасывать «Неделю N» и чередование. */
+  weekAnchor?: string;
   days: Weekday[];
   workouts: Record<string, WorkoutTemplate>;
   /** Чередование недель: rotation[неделя % length][индекс тренировочного дня] = ключ тренировки. */

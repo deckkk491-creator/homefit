@@ -1,5 +1,5 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
-import type { ComponentProps, ReactNode } from 'react';
+import { useState, type ComponentProps, type ReactNode } from 'react';
 import {
   Pressable,
   ScrollView,
@@ -14,6 +14,7 @@ import {
 } from 'react-native';
 import { SafeAreaView, type Edge } from 'react-native-safe-area-context';
 
+import { clampStep, formatNumber, parseNumberInput } from '@/lib/number';
 import { radius, space, type as typo, useTheme } from '@/theme';
 
 export type IconName = ComponentProps<typeof Ionicons>['name'];
@@ -243,38 +244,56 @@ export function Stepper({
   unit?: string;
 }) {
   const t = useTheme();
-  const clamp = (v: number) => Math.max(min, Math.min(max, Math.round(v * 10) / 10));
+  const clamp = (v: number) => clampStep(v, min, max, step);
+  // Пока поле в фокусе, храним «сырой» текст: иначе нельзя стереть число или ввести «75,5».
+  const [text, setText] = useState<string | null>(null);
+  const commit = () => {
+    if (text !== null) {
+      const n = parseNumberInput(text);
+      if (n !== null) onChange(clamp(n));
+    }
+    setText(null);
+  };
   return (
     <View style={[styles.stepper, { backgroundColor: t.surface, borderColor: t.border }]}>
       <T variant="bodyStrong" style={{ flex: 1 }}>
         {label}
       </T>
       <Pressable
+        accessibilityRole="button"
         accessibilityLabel={`Уменьшить: ${label}`}
-        hitSlop={8}
+        disabled={value <= min}
         onPress={() => onChange(clamp(value - step))}
-        style={[styles.stepBtn, { backgroundColor: t.surfaceAlt }]}>
+        style={[styles.stepBtn, { backgroundColor: t.surfaceAlt, opacity: value <= min ? 0.4 : 1 }]}>
         <Ionicons name="remove" size={22} color={t.text} />
       </Pressable>
       <View style={styles.stepValue}>
         <TextInput
           accessibilityLabel={label}
-          keyboardType="decimal-pad"
-          value={String(value)}
+          keyboardType={Number.isInteger(step) ? 'number-pad' : 'decimal-pad'}
+          value={text ?? formatNumber(value)}
+          onFocus={() => setText(formatNumber(value))}
           onChangeText={(s) => {
-            const n = Number(s.replace(',', '.'));
-            if (!Number.isNaN(n)) onChange(clamp(n));
+            setText(s);
+            // Сразу применяем только корректные значения внутри диапазона.
+            const n = parseNumberInput(s);
+            if (n !== null && n >= min && n <= max) onChange(clamp(n));
           }}
-          style={[typo.h3, { color: t.text, textAlign: 'center', minWidth: 48, padding: 0 }]}
+          onBlur={commit}
+          onSubmitEditing={commit}
+          returnKeyType="done"
+          maxLength={6}
+          style={[typo.h3, { color: t.text, textAlign: 'center', minWidth: 48, minHeight: 44, padding: 0 }]}
           selectTextOnFocus
         />
         {unit ? <T variant="small" color={t.textMuted}>{unit}</T> : null}
       </View>
       <Pressable
+        accessibilityRole="button"
         accessibilityLabel={`Увеличить: ${label}`}
-        hitSlop={8}
+        disabled={value >= max}
         onPress={() => onChange(clamp(value + step))}
-        style={[styles.stepBtn, { backgroundColor: t.surfaceAlt }]}>
+        style={[styles.stepBtn, { backgroundColor: t.surfaceAlt, opacity: value >= max ? 0.4 : 1 }]}>
         <Ionicons name="add" size={22} color={t.text} />
       </Pressable>
     </View>

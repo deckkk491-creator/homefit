@@ -336,7 +336,8 @@ export const EXERCISES: Exercise[] = [
     requires: ['bar'],
     level: 'beginner',
     muscles: ['Широчайшие', 'Бицепс'],
-    minPullups: 1,
+    // При 1–2 подтягиваниях любой подход — это максимум; таким дают лопаточные подтягивания и негативы.
+    minPullups: 3,
     repsFrom: 'pullups',
     priority: 2,
     steps: [

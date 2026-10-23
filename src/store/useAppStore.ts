@@ -73,8 +73,11 @@ export const useAppStore = create<AppState>()(
       setProfile: (profile) => set({ profile }),
       setDays: (days) => set({ days }),
       regenerate: () => {
-        const { profile, days } = get();
-        set({ plan: generatePlan(profile, days), session: null });
+        // Журнал (logs) не трогаем. Сессию сбрасываем: номера упражнений в новом плане другие.
+        const { profile, days, plan: prev } = get();
+        const next = generatePlan(profile, days);
+        if (prev) next.weekAnchor = prev.weekAnchor ?? prev.createdAt;
+        set({ plan: next, session: null });
       },
       completeOnboarding: () => {
         const { profile, days } = get();
