@@ -36,5 +36,6 @@ jobs:
           out=$(npx expo-doctor 2>&1); code=$?
           echo "$out"
           echo "::notice title=expo-doctor (exit $code)::$(echo "$out" | tail -n 25 | tr '\n' '|')"
+          exit $code
       - name: Bundle for iOS
         run: npx expo export --platform ios
