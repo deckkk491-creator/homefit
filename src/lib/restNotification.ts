@@ -44,24 +44,28 @@ function ensurePermission(): Promise<boolean> {
   return permissionRequest;
 }
 
-// Номер последнего запроса: если таймер успели закрыть, пока шёл запрос разрешения, не планируем
+// generation — номер последнего планирования (новое заменяет старое),
+// closed — сколько раз таймер закрывали (закрытие отменяет всё, что ещё в пути)
 let generation = 0;
+let closed = 0;
 
 /** Планирует (или переносит) уведомление на момент endAt. */
 export async function scheduleRestEnd(endAt: number): Promise<void> {
   if (Platform.OS === 'web') return;
   const gen = ++generation;
+  const cl = closed;
+  const stale = () => gen !== generation || cl !== closed;
   try {
     if (endAt - Date.now() < 1000) return;
     const granted = await ensurePermission();
-    if (!granted || gen !== generation) return;
+    if (!granted || stale()) return;
     if (Platform.OS === 'android') {
       await Notifications.setNotificationChannelAsync('rest', {
         name: 'Таймер отдыха',
         importance: Notifications.AndroidImportance.HIGH,
       });
     }
-    if (gen !== generation) return;
+    if (stale()) return;
     // тот же identifier заменяет прежнее уведомление (например, после «+15»)
     await Notifications.scheduleNotificationAsync({
       identifier: ID,
@@ -77,7 +81,7 @@ export async function scheduleRestEnd(endAt: number): Promise<void> {
       },
     });
     // таймер закрыли, пока уведомление планировалось — убираем его
-    if (gen !== generation) await Notifications.cancelScheduledNotificationAsync(ID);
+    if (cl !== closed) await Notifications.cancelScheduledNotificationAsync(ID);
   } catch (e) {
     console.warn('scheduleRestEnd failed', e);
   }
@@ -86,7 +90,7 @@ export async function scheduleRestEnd(endAt: number): Promise<void> {
 /** Отменяет запланированное уведомление и убирает уже показанное. */
 export async function cancelRestEnd(): Promise<void> {
   if (Platform.OS === 'web') return;
-  generation++;
+  closed++;
   try {
     await Notifications.cancelScheduledNotificationAsync(ID);
     await Notifications.dismissNotificationAsync(ID);
