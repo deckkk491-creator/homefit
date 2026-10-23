@@ -16,12 +16,25 @@ jobs:
       - name: Install dependencies
         run: npm install --no-audit --no-fund
       - name: Align Expo SDK versions
-        run: npx expo install --check || true
+        run: |
+          set +e
+          out=$(npx expo install --check 2>&1); code=$?
+          echo "$out"
+          echo "::notice title=expo install --check (exit $code)::$(echo "$out" | tail -n 15 | tr '\n' '|')"
       - name: Type check
         run: npx tsc --noEmit
       - name: Unit tests
-        run: npx jest --ci
+        run: |
+          set +e
+          npx jest --ci > jest.log 2>&1; code=$?
+          cat jest.log
+          echo "::notice title=jest (exit $code)::$(grep -E '^(Tests|Test Suites):' jest.log | tr '\n' '|')"
+          exit $code
       - name: Expo doctor
-        run: npx expo-doctor || true
+        run: |
+          set +e
+          out=$(npx expo-doctor 2>&1); code=$?
+          echo "$out"
+          echo "::notice title=expo-doctor (exit $code)::$(echo "$out" | tail -n 25 | tr '\n' '|')"
       - name: Bundle for iOS
         run: npx expo export --platform ios
