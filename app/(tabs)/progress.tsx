@@ -3,6 +3,7 @@ import { Alert, Pressable, View } from 'react-native';
 
 import { Card, Gap, Row, Screen, SectionLabel, T } from '@/components/ui';
 import { WEEKDAY_SHORT, weekdayOf } from '@/lib/planGenerator';
+import { useNow } from '@/lib/useNow';
 import { useAppStore } from '@/store/useAppStore';
 import { radius, space, type as typo, useTheme } from '@/theme';
 
@@ -20,7 +21,7 @@ export default function Progress() {
   const plan = useAppStore((s) => s.plan);
   const deleteLog = useAppStore((s) => s.deleteLog);
 
-  const now = new Date();
+  const now = useNow();
   const thisWeek = startOfWeek(now);
   const perWeek = plan?.days.length ?? 3;
 

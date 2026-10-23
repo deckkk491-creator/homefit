@@ -87,14 +87,19 @@ export function RestTimer({
   }, [startKey, seconds]);
 
   useEffect(() => {
-    const id = setInterval(() => {
+    // Интервал очищается при размонтировании, смене endAt и как только отдых закончился.
+    const tick = () => {
       const l = Math.max(0, Math.round((endAt - Date.now()) / 1000));
       setLeft(l);
-      if (l === 0 && !buzzed.current) {
-        buzzed.current = true;
-        Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success).catch(() => undefined);
+      if (l === 0) {
+        clearInterval(id);
+        if (!buzzed.current) {
+          buzzed.current = true;
+          Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success).catch(() => undefined);
+        }
       }
-    }, 250);
+    };
+    const id = setInterval(tick, 250);
     return () => clearInterval(id);
   }, [endAt]);
 
@@ -118,7 +123,7 @@ export function RestTimer({
             <Pressable
               accessibilityRole="button"
               accessibilityLabel="Добавить 15 секунд"
-              onPress={() => setEndAt(endAt + 15000)}
+              onPress={() => setEndAt((e) => e + 15000)}
               style={[styles.timerBtn, { borderColor: t.bg + '55' }]}>
               <T variant="bodyStrong" color={t.bg}>
                 +15

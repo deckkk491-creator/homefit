@@ -14,6 +14,7 @@ import {
   weekdayOf,
   workoutKeyForDate,
 } from '@/lib/planGenerator';
+import { useNow } from '@/lib/useNow';
 import { todayKey, useAppStore } from '@/store/useAppStore';
 import { radius, space, useTheme } from '@/theme';
 
@@ -29,14 +30,15 @@ export default function Today() {
   const finishSession = useAppStore((s) => s.finishSession);
   const discardSession = useAppStore((s) => s.discardSession);
 
-  const now = new Date();
+  const now = useNow();
   const dateKey = todayKey(now);
   const scheduledKey = plan ? workoutKeyForDate(plan, now) : null;
   // Можно потренироваться и в день отдыха — выбрав тренировку вручную.
   const [manualKey, setManualKey] = useState<string | null>(null);
   const activeKey = session && session.date === dateKey ? session.workoutKey : manualKey ?? scheduledKey;
   const workout = plan && activeKey ? plan.workouts[activeKey] : null;
-  const doneToday = logs.some((l) => l.date.slice(0, 10) === dateKey);
+  // l.date хранится в UTC (toISOString), поэтому сравниваем по локальной дате, а не по первым 10 символам.
+  const doneToday = logs.some((l) => todayKey(new Date(l.date)) === dateKey);
   const inSession = !!session && session.date === dateKey && session.workoutKey === activeKey;
 
   const [timer, setTimer] = useState<{ sec: number; key: number } | null>(null);

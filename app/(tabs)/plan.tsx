@@ -9,6 +9,7 @@ import { getExercise, LEVEL_LABELS } from '@/data/exercises';
 import { GOALS } from '@/components/ProfileFields';
 import { estimateMinutes, formatTarget, plural, WEEKDAY_SHORT, weekdayOf, weekIndex } from '@/lib/planGenerator';
 import type { Weekday } from '@/lib/types';
+import { useNow } from '@/lib/useNow';
 import { useAppStore } from '@/store/useAppStore';
 import { radius, space, useTheme } from '@/theme';
 
@@ -21,13 +22,14 @@ const SHORT: Record<string, string> = {
 export default function PlanScreen() {
   const t = useTheme();
   const plan = useAppStore((s) => s.plan);
-  const today = weekdayOf(new Date());
+  const now = useNow();
+  const today = weekdayOf(now);
   const [selected, setSelected] = useState<Weekday>(() =>
     plan && plan.days.includes(today) ? today : (plan?.days.find((d) => d > today) ?? plan?.days[0] ?? 0)
   );
   if (!plan) return null;
 
-  const week = weekIndex(plan, new Date());
+  const week = weekIndex(plan, now);
   const rotation = plan.rotation[week % plan.rotation.length];
   const keyFor = (d: Weekday) => {
     const i = plan.days.indexOf(d);
@@ -141,7 +143,7 @@ export default function PlanScreen() {
 
       {plan.rotation.length > 1 ? (
         <T variant="small" color={t.textMuted} style={{ marginTop: space.md }}>
-          Тренировки A и B чередуются: на следующей неделе порядок поменяется.
+          Порядок тренировок меняется каждую неделю, чтобы нагрузка распределялась равномерно.
         </T>
       ) : null}
 
