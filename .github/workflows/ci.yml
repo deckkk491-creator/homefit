@@ -29,6 +29,7 @@ jobs:
           npx jest --ci > jest.log 2>&1; code=$?
           cat jest.log
           echo "::notice title=jest (exit $code)::$(grep -E '^(Tests|Test Suites):' jest.log | tr '\n' '|')"
+          if [ $code -ne 0 ]; then echo "::error title=jest log::$(head -c 3500 jest.log | tr '\n' '|')"; fi
           exit $code
       - name: Expo doctor
         run: |
