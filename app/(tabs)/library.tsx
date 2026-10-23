@@ -63,7 +63,7 @@ export default function Library() {
                 value={q}
                 onChangeText={setQ}
                 placeholder="Название или мышца"
-                placeholderTextColor={t.textFaint}
+                placeholderTextColor={t.textMuted}
                 style={[typo.body, { flex: 1, color: t.text, paddingVertical: space.md }]}
                 clearButtonMode="while-editing"
                 returnKeyType="search"
@@ -97,7 +97,7 @@ export default function Library() {
                 <T variant="small" color={t.textMuted} numberOfLines={1}>
                   {item.muscles.slice(0, 3).join(', ')}
                 </T>
-                <T variant="small" color={t.textFaint} numberOfLines={1}>
+                <T variant="small" color={t.textMuted} numberOfLines={1}>
                   {LEVEL_LABELS[item.level]} ·{' '}
                   {item.requires.length ? item.requires.map((g) => GEAR_LABELS[g]).join(', ') : 'без инвентаря'}
                 </T>

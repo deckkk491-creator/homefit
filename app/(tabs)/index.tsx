@@ -151,7 +151,10 @@ export default function Today() {
           </View>
         </Row>
         {manualKey && !inSession ? (
-          <Pressable onPress={() => setManualKey(null)} hitSlop={8} style={{ marginTop: space.sm, minHeight: 32 }}>
+          <Pressable
+            accessibilityRole="button"
+            onPress={() => setManualKey(null)}
+            style={{ marginTop: space.xs, minHeight: 44, justifyContent: 'center', alignSelf: 'flex-start' }}>
             <T variant="small" color={t.accentStrong} style={{ fontWeight: '700' }}>
               ← Вернуться к расписанию
             </T>

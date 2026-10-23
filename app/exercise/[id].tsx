@@ -42,7 +42,7 @@ export default function ExerciseDetail() {
       <Gap h={space.lg} />
 
       {/* Карусель: старт / финиш */}
-      <View style={{ borderRadius: radius.lg, overflow: 'hidden', backgroundColor: '#FFFFFF' }}>
+      <View style={{ borderRadius: radius.lg, overflow: 'hidden', backgroundColor: t.photoBg }}>
         <ScrollView
           horizontal
           pagingEnabled
@@ -118,7 +118,7 @@ export default function ExerciseDetail() {
       </Card>
 
       <Gap h={space.lg} />
-      <T variant="small" color={t.textFaint}>
+      <T variant="small" color={t.textMuted}>
         Фото: free-exercise-db (public domain).
       </T>
     </ScrollView>

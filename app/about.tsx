@@ -28,7 +28,7 @@ export default function About() {
         <Gap h={space.sm} />
         <Pressable
           accessibilityRole="link"
-          hitSlop={8}
+          style={{ minHeight: 44, justifyContent: 'center' }}
           onPress={() => Linking.openURL('https://github.com/yuhonas/free-exercise-db')}>
           <T variant="bodyStrong" color={t.accentStrong}>
             github.com/yuhonas/free-exercise-db

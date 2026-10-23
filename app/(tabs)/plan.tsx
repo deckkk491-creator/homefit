@@ -114,7 +114,7 @@ export default function PlanScreen() {
             return (
               <Card key={pe.exerciseId} onPress={() => router.push(`/exercise/${pe.exerciseId}`)} style={{ marginBottom: space.sm }}>
                 <Row gap={space.md}>
-                  <T variant="h3" color={t.textFaint} style={{ width: 20 }}>
+                  <T variant="h3" color={t.textMuted} style={{ width: 20 }}>
                     {i + 1}
                   </T>
                   <ExerciseThumb id={pe.exerciseId} size={56} />

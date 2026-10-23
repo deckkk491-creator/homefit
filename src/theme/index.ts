@@ -2,7 +2,11 @@ import { useColorScheme } from 'react-native';
 
 /**
  * Палитра: тёплый «бумажный» светлый фон и почти чёрный графит в тёмной теме.
- * Один акцент — кислотный лайм. На лайме всегда тёмный текст (контраст ≥ 12:1).
+ * Один акцент — кислотный лайм. На лайме всегда тёмный текст accentInk (14,5:1);
+ * белый текст на лайме запрещён (1,3:1). Лайм как цвет текста — только в тёмной теме
+ * (через accentStrong). Контраст проверен по WCAG AA:
+ *  - text / textMuted / accentStrong / danger на bg, surface, surfaceAlt ≥ 4,5:1;
+ *  - textFaint ≥ 3:1 — только для иконок и неосновных элементов.
  */
 const palette = {
   light: {
@@ -12,14 +16,17 @@ const palette = {
     border: '#DCDBD3',
     text: '#141512',
     textMuted: '#62645C',
-    textFaint: '#9A9C93',
+    /** Вторичные иконки и подсказки: ≥ 3:1 на всех фонах (WCAG 1.4.11). Для текста — textMuted. */
+    textFaint: '#75776E',
     accent: '#C8F53C',
     accentInk: '#141512',
     /** Акцент для текста/иконок на светлом фоне (лайм нечитаем на белом). */
     accentStrong: '#4E6B00',
-    danger: '#C2410C',
+    danger: '#B0360A',
     success: '#3F7D20',
     overlay: 'rgba(20,21,18,0.06)',
+    /** Подложка фото упражнений (снимки на белом фоне). */
+    photoBg: '#FFFFFF',
   },
   dark: {
     bg: '#0E0F0C',
@@ -28,13 +35,14 @@ const palette = {
     border: '#2C2F27',
     text: '#F4F3EE',
     textMuted: '#A4A79B',
-    textFaint: '#6D7066',
+    textFaint: '#7E8176',
     accent: '#C8F53C',
     accentInk: '#141512',
     accentStrong: '#C8F53C',
     danger: '#FB923C',
     success: '#A3E635',
     overlay: 'rgba(244,243,238,0.06)',
+    photoBg: '#FFFFFF',
   },
 };
 
