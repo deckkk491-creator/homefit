@@ -1,0 +1,55 @@
+{
+  "expo": {
+    "name": "HomeFit",
+    "slug": "homefit",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/images/icon.png",
+    "scheme": "homefit",
+    "userInterfaceStyle": "automatic",
+    "backgroundColor": "#0E0F0C",
+    "ios": {
+      "bundleIdentifier": "com.deckkk491.homefit",
+      "supportsTablet": false,
+      "buildNumber": "1",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false,
+        "CFBundleDevelopmentRegion": "ru"
+      }
+    },
+    "android": {
+      "package": "com.deckkk491.homefit",
+      "adaptiveIcon": {
+        "backgroundColor": "#0E0F0C",
+        "foregroundImage": "./assets/images/android-icon-foreground.png"
+      }
+    },
+    "web": {
+      "bundler": "metro",
+      "favicon": "./assets/images/favicon.png"
+    },
+    "plugins": [
+      "expo-router",
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/images/splash-icon.png",
+          "imageWidth": 160,
+          "resizeMode": "contain",
+          "backgroundColor": "#F4F3EE",
+          "dark": {
+            "image": "./assets/images/splash-icon.png",
+            "backgroundColor": "#0E0F0C"
+          }
+        }
+      ]
+    ],
+    "locales": {
+      "ru": "./locales/ru.json"
+    },
+    "newArchEnabled": true,
+    "experiments": {
+      "typedRoutes": false
+    }
+  }
+}
