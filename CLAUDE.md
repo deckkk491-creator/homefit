@@ -3,7 +3,7 @@
 Приложение для домашних тренировок под iOS (App Store). Владелец: deckkk491-creator.
 
 ## Стек и сборка
-- Expo SDK 54, expo-router 6, React Native 0.81, TypeScript strict, zustand + AsyncStorage.
+- Expo SDK 58, expo-router 58, React Native 0.88, React 19.3, TypeScript 6 strict, zustand + AsyncStorage.
 - Всё хранится только на устройстве: нет сервера, аккаунтов и внешнего ИИ.
 - Сборка только в облаке EAS: у владельца MacBook Air 2019, Xcode 26 на нём не ставится. App Store с 28.04.2026 требует Xcode 26 / iOS 26 SDK.
 - Bundle ID: `com.deckkk491.homefit`.
@@ -22,7 +22,7 @@
 
 ## Следующие шаги
 1. Открыть в Expo Go на iPhone и проверить экраны в светлой и тёмной теме.
-2. Закоммитить `package-lock.json` после первого локального `npm install`.
+2. `package-lock.json` закоммичен (SDK 58). Тесты — babel-jest без пресета jest-expo.
 3. Оплатить Apple Developer Program, затем `eas init`, `eas build -p ios --profile production` и `eas submit -p ios --latest`.
 4. Скриншоты 6.9" (1320×2868) по `store/screenshots-plan.md`.
 5. Проверить уведомление «Отдых окончен» (`src/lib/restNotification.ts`): отметить подход, заблокировать телефон — по окончании отдыха придёт уведомление. Разрешение спрашивается при первом запуске таймера.
