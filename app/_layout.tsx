@@ -30,15 +30,21 @@ function Gate() {
   const first = segments[0] as string | undefined;
 
   useEffect(() => {
+    // Сплэш держим, пока не прочитано хранилище: вернувшийся пользователь не видит анкету.
     if (target === null || !navReady) return;
-    SplashScreen.hideAsync().catch(() => undefined);
     const ok =
       target === '/disclaimer'
         ? first === 'disclaimer'
         : target === '/onboarding'
           ? first === 'onboarding'
           : first !== 'disclaimer' && first !== 'onboarding' && first !== undefined;
-    if (!ok) router.replace(target);
+    if (!ok) {
+      router.replace(target);
+      // Прячем сплэш на следующем кадре, когда нужный экран уже смонтирован.
+      const id = setTimeout(() => SplashScreen.hideAsync().catch(() => undefined), 50);
+      return () => clearTimeout(id);
+    }
+    SplashScreen.hideAsync().catch(() => undefined);
   }, [target, first, navReady]);
 
   return null;
