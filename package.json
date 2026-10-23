@@ -43,7 +43,17 @@
     "typescript": "~6.0.3"
   },
   "jest": {
-    "preset": "jest-expo",
+    "testEnvironment": "node",
+    "transform": {
+      "^.+\\.[jt]sx?$": [
+        "babel-jest",
+        {
+          "presets": [
+            "babel-preset-expo"
+          ]
+        }
+      ]
+    },
     "moduleNameMapper": {
       "^@/(.*)$": "<rootDir>/src/$1"
     },
