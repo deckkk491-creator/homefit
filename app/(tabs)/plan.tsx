@@ -7,7 +7,7 @@ import { Card, Gap, Pill, Row, Screen, SectionLabel, T } from '@/components/ui';
 import { ExerciseThumb } from '@/components/workout';
 import { getExercise, LEVEL_LABELS } from '@/data/exercises';
 import { GOALS } from '@/components/ProfileFields';
-import { estimateMinutes, formatTarget, WEEKDAY_SHORT, weekdayOf, weekIndex } from '@/lib/planGenerator';
+import { estimateMinutes, formatTarget, plural, WEEKDAY_SHORT, weekdayOf, weekIndex } from '@/lib/planGenerator';
 import type { Weekday } from '@/lib/types';
 import { useAppStore } from '@/store/useAppStore';
 import { radius, space, useTheme } from '@/theme';
@@ -105,7 +105,7 @@ export default function PlanScreen() {
         <>
           <T variant="h1">{workout.title}</T>
           <T color={t.textMuted}>
-            {workout.focus} · ~{estimateMinutes(workout)} мин · {workout.exercises.length} упражнений
+            {workout.focus} · ≈ {estimateMinutes(workout)} мин · {plural(workout.exercises.length, 'упражнение', 'упражнения', 'упражнений')}
           </T>
           <Gap h={space.lg} />
           {workout.exercises.map((pe, i) => {

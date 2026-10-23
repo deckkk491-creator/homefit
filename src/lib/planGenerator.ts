@@ -166,21 +166,21 @@ export function planExercise(ex: Exercise, p: Profile, level: Level): PlannedExe
     const max = ex.repsFrom === 'pushups' ? p.maxPushups : p.maxPullups;
     repsMin = Math.max(ex.repsFrom === 'pullups' ? 1 : 3, Math.round(max * 0.5));
     repsMax = Math.max(repsMin + 1, Math.round(max * 0.75));
-    note = 'Повторы подобраны от вашего максимума. Оставляйте 1–2 повтора «в запасе».';
+    note = 'Повторения подобраны от твоего максимума. Оставляй 1–2 повторения «в запасе».';
   } else if (ex.loadType === 'bodyweight' || ex.loadType === 'band') {
     // Без внешнего веса прогресс идёт через повторы.
     if (ex.pattern === 'core') [repsMin, repsMax] = lr === 0 ? [10, 15] : [12, 20];
     else if (ex.id === 'Scapular_Pull-Up') [repsMin, repsMax] = [6, 10];
     else if (ex.id === 'Band_Assisted_Pull-Up') [repsMin, repsMax] = [4, 8];
     else [repsMin, repsMax] = [Math.max(repsMin, 12), Math.max(repsMax, 20)];
-    if (ex.loadType === 'band') note = 'Подберите резинку, с которой последние 2 повтора даются тяжело.';
+    if (ex.loadType === 'band') note = 'Подбери резинку, с которой последние 2 повторения даются тяжело.';
   }
 
   const weightKg = suggestWeight(ex, p, level);
   if (ex.loadType === 'dumbbell' && !p.equipment.dumbbells.adjustable && ex.loadPct) {
     const ideal = ex.loadPct[lr] * p.equipment.dumbbells.weightKg;
     if (ideal < p.equipment.dumbbells.weightKg * 0.8) {
-      note = 'Гантели нерегулируемые: если тяжело — уменьшите повторы или делайте одной рукой.';
+      note = 'Гантели нерегулируемые: если вес великоват — сделай меньше повторений, но сохрани технику.';
     }
   }
 
@@ -360,13 +360,13 @@ export function buildWorkout(def: TemplateDef, p: Profile, level: Level, gear: S
 function tipsFor(level: Level, goal: Goal): string[] {
   const tips = [
     'Перед тренировкой — 5–7 минут разминки: суставная гимнастика и лёгкое кардио.',
-    'Двойная прогрессия: когда во всех подходах выполнили верхнюю границу повторов — добавьте вес или усложните вариант.',
-    'Последние 1–2 повтора должны даваться тяжело, но без нарушения техники.',
+    'Двойная прогрессия: когда во всех подходах выполнишь верхнюю границу повторений — добавь вес или переходи к более сложному варианту.',
+    'Последние 1–2 повторения должны даваться тяжело, но без нарушения техники.',
   ];
-  if (level === 'beginner') tips.push('Первые 2 недели сосредоточьтесь на технике, а не на весе.');
-  if (goal === 'strength') tips.push('Для роста мышц ешьте достаточно белка (≈1,6 г на кг веса) и спите 7–9 часов.');
-  if (goal === 'tone') tips.push('Держите короткий отдых и добавляйте 7–10 тыс. шагов в день.');
-  if (goal === 'fitness') tips.push('Регулярность важнее интенсивности: не пропускайте тренировки.');
+  if (level === 'beginner') tips.push('Первые 2 недели сосредоточься на технике, а не на весе.');
+  if (goal === 'strength') tips.push('Для роста мышц ешь достаточно белка (≈ 1,6 г на кг веса) и спи 7–9 часов.');
+  if (goal === 'tone') tips.push('Отдыхай между подходами недолго и проходи 7–10 тысяч шагов в день.');
+  if (goal === 'fitness') tips.push('Регулярность важнее интенсивности: не пропускай тренировки.');
   return tips;
 }
 
@@ -427,6 +427,14 @@ export function formatTarget(e: PlannedExercise): string {
   const unit = e.isTime ? 'сек' : 'повт.';
   const range = e.repsMin === e.repsMax ? `${e.repsMin}` : `${e.repsMin}–${e.repsMax}`;
   return `${e.sets} × ${range} ${unit}${e.perSide ? ' на сторону' : ''}`;
+}
+
+/** Русское склонение: plural(5, 'упражнение', 'упражнения', 'упражнений') → «5 упражнений». */
+export function plural(n: number, one: string, few: string, many: string): string {
+  const a = Math.abs(n) % 100;
+  const b = a % 10;
+  const word = a > 10 && a < 20 ? many : b === 1 ? one : b >= 2 && b <= 4 ? few : many;
+  return `${n} ${word}`;
 }
 
 export const WEEKDAY_SHORT = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'] as const;

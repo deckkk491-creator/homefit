@@ -119,7 +119,7 @@ export default function ExerciseDetail() {
 
       <Gap h={space.lg} />
       <T variant="small" color={t.textMuted}>
-        Фото: free-exercise-db (public domain).
+        Фото: free-exercise-db (общественное достояние).
       </T>
     </ScrollView>
   );

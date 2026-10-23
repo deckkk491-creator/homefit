@@ -96,7 +96,7 @@ export default function Progress() {
         <Gap h={space.sm} />
         <Row style={{ justifyContent: 'space-between' }}>
           <T variant="small" color={t.textMuted}>
-            8 нед. назад
+            7 нед. назад
           </T>
           <T variant="small" color={t.textMuted}>
             сейчас
@@ -108,7 +108,7 @@ export default function Progress() {
       {logs.length === 0 ? (
         <Card tone="alt">
           <T color={t.textMuted}>
-            Здесь появятся завершённые тренировки. Отмечайте подходы на вкладке «Сегодня» и нажмите «Завершить».
+            Здесь появятся завершённые тренировки. Отмечай подходы на вкладке «Сегодня» и нажми «Завершить тренировку».
           </T>
         </Card>
       ) : (

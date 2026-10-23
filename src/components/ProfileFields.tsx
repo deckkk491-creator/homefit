@@ -9,8 +9,8 @@ import { radius, space, useTheme } from '@/theme';
 type P = { profile: Profile; onChange: (p: Profile) => void };
 
 export const GOALS: { value: Goal; title: string; subtitle: string; icon: 'barbell' | 'body' | 'heart' }[] = [
-  { value: 'strength', title: 'Сила и мышцы', subtitle: 'Меньше повторов, больше веса и отдыха', icon: 'barbell' },
-  { value: 'tone', title: 'Тонус и рельеф', subtitle: 'Средние повторы, короткий отдых', icon: 'body' },
+  { value: 'strength', title: 'Сила и мышцы', subtitle: 'Меньше повторений, больше веса и отдыха', icon: 'barbell' },
+  { value: 'tone', title: 'Тонус и рельеф', subtitle: 'Средний диапазон повторений, короткий отдых', icon: 'body' },
   { value: 'fitness', title: 'Общая форма', subtitle: 'Здоровье, выносливость, регулярность', icon: 'heart' },
 ];
 
@@ -77,7 +77,7 @@ export function LevelFields({ profile, onChange }: P) {
         unit="макс."
       />
       <T variant="small" color={t.textMuted} style={{ marginBottom: space.lg }}>
-        Сколько раз подряд вы отожмётесь от пола с правильной техникой.
+        Сколько раз подряд ты отожмёшься от пола с правильной техникой.
       </T>
       <ToggleRow
         icon="git-commit-outline"
@@ -164,7 +164,7 @@ export function EquipmentFields({ profile, onChange }: P) {
       />
       {nothing ? (
         <T variant="small" color={t.textMuted} style={{ marginTop: space.sm }}>
-          Без инвентаря — тоже отлично: план будет на весе собственного тела.
+          Без инвентаря — тоже отлично: план будет с весом собственного тела.
         </T>
       ) : null}
     </View>
@@ -189,7 +189,7 @@ export function DayPicker({ days, onChange }: { days: Weekday[]; onChange: (d: W
         <Row gap={space.sm} style={{ alignItems: 'flex-start' }}>
           <Ionicons name="sparkles" size={20} color={t.accentInk} style={{ marginTop: 2 }} />
           <T variant="bodyStrong" color={t.accentInk} style={{ flex: 1 }}>
-            3 раза в неделю через день (например Пн/Ср/Пт) — оптимально для укрепления и роста мышц
+            3 раза в неделю через день (например, Пн/Ср/Пт) — оптимально для укрепления и роста мышц
           </T>
         </Row>
         <Pressable
@@ -235,7 +235,7 @@ export function DayPicker({ days, onChange }: { days: Weekday[]; onChange: (d: W
       </View>
       <T variant="small" color={t.textMuted}>
         Выбрано дней: {days.length}. Можно от {MIN_DAYS} до {MAX_DAYS}.
-        {days.length >= 5 ? ' Много тренировок — следите за восстановлением и сном.' : ''}
+        {days.length >= 5 ? ' Много тренировок — следи за восстановлением и сном.' : ''}
       </T>
     </View>
   );

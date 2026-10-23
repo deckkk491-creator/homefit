@@ -85,7 +85,7 @@ export default function Library() {
         }
         ListEmptyComponent={
           <T color={t.textMuted} style={{ textAlign: 'center', marginTop: space.xl }}>
-            Ничего не нашлось. Попробуйте другой запрос.
+            Ничего не нашлось. Попробуй другой запрос.
           </T>
         }
         renderItem={({ item }) => (

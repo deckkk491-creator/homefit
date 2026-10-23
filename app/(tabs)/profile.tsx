@@ -32,14 +32,14 @@ export default function ProfileScreen() {
     setProfile(draft);
     setDays(days);
     regenerate();
-    Alert.alert('План обновлён', `Уровень: ${LEVEL_LABELS[computeLevel(draft)]}. Загляните во вкладку «План».`);
+    Alert.alert('План обновлён', `Уровень: ${LEVEL_LABELS[computeLevel(draft)]}. Загляни на вкладку «План».`);
   };
 
   return (
     <Screen>
       <T variant="display">Профиль</T>
       <Gap h={space.sm} />
-      <T color={t.textMuted}>Измените данные и пересоздайте план — например, когда станете сильнее или купите гантели.</T>
+      <T color={t.textMuted}>Измени данные и пересоздай план — например, когда станешь сильнее или купишь гантели.</T>
       <Gap h={space.lg} />
       <Card tone="alt">
         <Row style={{ justifyContent: 'space-between' }}>

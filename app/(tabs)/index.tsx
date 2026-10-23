@@ -110,13 +110,13 @@ export default function Today() {
         <Gap h={space.xl} />
         <Card tone="alt">
           <T variant="label" color={t.textMuted}>
-            Ваши дни
+            Дни тренировок
           </T>
           <Gap h={space.xs} />
           <T variant="h2">{nextDays}</T>
         </Card>
         <Gap h={space.xl} />
-        <T variant="h3">Хотите потренироваться сегодня?</T>
+        <T variant="h3">Хочешь потренироваться сегодня?</T>
         <Gap h={space.sm} />
         {Object.values(plan.workouts).map((w) => (
           <Card key={w.key} onPress={() => setManualKey(w.key)} style={{ marginBottom: space.sm }}>
@@ -124,7 +124,7 @@ export default function Today() {
               <View style={{ flex: 1 }}>
                 <T variant="bodyStrong">{w.title}</T>
                 <T variant="small" color={t.textMuted}>
-                  {w.focus} · ~{estimateMinutes(w)} мин
+                  {w.focus} · ≈ {estimateMinutes(w)} мин
                 </T>
               </View>
               <Ionicons name="chevron-forward" size={22} color={t.textFaint} />
@@ -146,7 +146,7 @@ export default function Today() {
             <T variant="display">{workout.title}</T>
             <Gap h={space.xs} />
             <T color={t.textMuted}>
-              {workout.focus} · ~{estimateMinutes(workout)} мин
+              {workout.focus} · ≈ {estimateMinutes(workout)} мин
             </T>
           </View>
         </Row>
@@ -174,7 +174,7 @@ export default function Today() {
         </View>
         <Gap h={space.xs} />
         <T variant="small" color={t.textMuted}>
-          Подходов: {setsDone} из {setsTotal}. Отметьте подход — запустится таймер отдыха.
+          Подходов: {setsDone} из {setsTotal}. Отметь подход — запустится таймер отдыха.
         </T>
         <Gap h={space.lg} />
 
@@ -199,7 +199,7 @@ export default function Today() {
                     </T>
                     <T variant="small" color={t.textMuted}>
                       {pe.weightKg ? `${pe.weightKg} кг${ex.loadType === 'dumbbell' ? ' (гантель)' : ''} · ` : ''}
-                      отдых {pe.restSec} с
+                      отдых {pe.restSec} сек
                     </T>
                   </View>
                   <Ionicons name="information-circle-outline" size={24} color={t.textFaint} />
