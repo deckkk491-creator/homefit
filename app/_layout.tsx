@@ -65,6 +65,7 @@ export default function RootLayout() {
         <Stack.Screen name="(tabs)" />
         <Stack.Screen name="exercise/[id]" options={{ headerShown: true, title: '' }} />
         <Stack.Screen name="about" options={{ headerShown: true, title: 'О приложении' }} />
+        <Stack.Screen name="health" options={{ headerShown: true, title: 'Здоровье и безопасность' }} />
       </Stack>
     </SafeAreaProvider>
   );

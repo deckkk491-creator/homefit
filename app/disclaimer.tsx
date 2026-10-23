@@ -1,16 +1,10 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { View } from 'react-native';
 
-import { Button, Card, Gap, Row, Screen, T } from '@/components/ui';
+import { HealthPoints } from '@/components/HealthPoints';
+import { Button, Gap, Screen, T } from '@/components/ui';
 import { useAppStore } from '@/store/useAppStore';
 import { radius, space, useTheme } from '@/theme';
-
-const POINTS = [
-  'HomeFit — приложение для самостоятельных тренировок. Это не медицинская консультация, не диагностика и не лечение.',
-  'Перед началом занятий проконсультируйся с врачом, особенно если у тебя есть заболевания сердца и сосудов, повышенное давление, травмы, болезни суставов или позвоночника, беременность или был долгий перерыв в тренировках.',
-  'Немедленно прекрати упражнение при боли в груди, головокружении, сильной одышке или острой боли в суставах.',
-  'Используй только устойчивые опоры и исправный инвентарь. Ты тренируешься на свой страх и риск.',
-];
 
 export default function Disclaimer() {
   const t = useTheme();
@@ -40,16 +34,7 @@ export default function Disclaimer() {
       <Gap h={space.sm} />
       <T color={t.textMuted}>Пожалуйста, прочитай перед первой тренировкой.</T>
       <Gap h={space.xl} />
-      <Card>
-        {POINTS.map((p, i) => (
-          <Row key={i} gap={space.md} style={{ alignItems: 'flex-start', marginBottom: i < POINTS.length - 1 ? space.lg : 0 }}>
-            <T variant="h3" color={t.accentStrong} style={{ width: 22 }}>
-              {i + 1}
-            </T>
-            <T style={{ flex: 1 }}>{p}</T>
-          </Row>
-        ))}
-      </Card>
+      <HealthPoints />
     </Screen>
   );
 }

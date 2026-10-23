@@ -65,6 +65,15 @@ export default function ProfileScreen() {
       <Button title={dirty ? 'Сохранить и пересоздать план' : 'Пересоздать план'} icon="refresh" onPress={apply} />
       <Gap h={space.xl} />
 
+      <Card onPress={() => router.push('/health')} style={{ marginBottom: space.sm }}>
+        <Row gap={space.md}>
+          <Ionicons name="medkit-outline" size={24} color={t.text} />
+          <T variant="bodyStrong" style={{ flex: 1 }}>
+            Здоровье и безопасность
+          </T>
+          <Ionicons name="chevron-forward" size={20} color={t.textFaint} />
+        </Row>
+      </Card>
       <Card onPress={() => router.push('/about')}>
         <Row gap={space.md}>
           <Ionicons name="information-circle-outline" size={24} color={t.text} />
