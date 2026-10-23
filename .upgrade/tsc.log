@@ -1,0 +1,141 @@
+__tests__/planGenerator.test.ts(48,1): error TS2593: Cannot find name 'describe'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+__tests__/planGenerator.test.ts(49,3): error TS2593: Cannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+__tests__/planGenerator.test.ts(50,5): error TS2304: Cannot find name 'expect'.
+__tests__/planGenerator.test.ts(53,3): error TS2593: Cannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+__tests__/planGenerator.test.ts(54,5): error TS2304: Cannot find name 'expect'.
+__tests__/planGenerator.test.ts(55,5): error TS2304: Cannot find name 'expect'.
+__tests__/planGenerator.test.ts(56,5): error TS2304: Cannot find name 'expect'.
+__tests__/planGenerator.test.ts(57,5): error TS2304: Cannot find name 'expect'.
+__tests__/planGenerator.test.ts(58,5): error TS2304: Cannot find name 'expect'.
+__tests__/planGenerator.test.ts(61,3): error TS2593: Cannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+__tests__/planGenerator.test.ts(62,5): error TS2304: Cannot find name 'expect'.
+__tests__/planGenerator.test.ts(63,5): error TS2304: Cannot find name 'expect'.
+__tests__/planGenerator.test.ts(66,3): error TS2593: Cannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+__tests__/planGenerator.test.ts(68,5): error TS2304: Cannot find name 'expect'.
+__tests__/planGenerator.test.ts(69,5): error TS2304: Cannot find name 'expect'.
+__tests__/planGenerator.test.ts(73,1): error TS2593: Cannot find name 'describe'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+__tests__/planGenerator.test.ts(74,3): error TS2593: Cannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+__tests__/planGenerator.test.ts(79,18): error TS7006: Parameter 'n' implicitly has an 'any' type.
+__tests__/planGenerator.test.ts(79,21): error TS7006: Parameter 'first' implicitly has an 'any' type.
+__tests__/planGenerator.test.ts(80,5): error TS2304: Cannot find name 'expect'.
+__tests__/planGenerator.test.ts(83,3): error TS2593: Cannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+__tests__/planGenerator.test.ts(84,5): error TS2304: Cannot find name 'expect'.
+__tests__/planGenerator.test.ts(88,1): error TS2593: Cannot find name 'describe'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+__tests__/planGenerator.test.ts(89,3): error TS2593: Cannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+__tests__/planGenerator.test.ts(92,5): error TS2304: Cannot find name 'expect'.
+__tests__/planGenerator.test.ts(95,3): error TS2593: Cannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+__tests__/planGenerator.test.ts(98,7): error TS2304: Cannot find name 'expect'.
+__tests__/planGenerator.test.ts(99,36): error TS2304: Cannot find name 'expect'.
+__tests__/planGenerator.test.ts(103,3): error TS2593: Cannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+__tests__/planGenerator.test.ts(106,5): error TS2304: Cannot find name 'expect'.
+__tests__/planGenerator.test.ts(107,5): error TS2304: Cannot find name 'expect'.
+__tests__/planGenerator.test.ts(110,3): error TS2593: Cannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+__tests__/planGenerator.test.ts(115,5): error TS2304: Cannot find name 'expect'.
+__tests__/planGenerator.test.ts(116,5): error TS2304: Cannot find name 'expect'.
+__tests__/planGenerator.test.ts(117,5): error TS2304: Cannot find name 'expect'.
+__tests__/planGenerator.test.ts(121,9): error TS2304: Cannot find name 'expect'.
+__tests__/planGenerator.test.ts(125,3): error TS2593: Cannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+__tests__/planGenerator.test.ts(131,5): error TS2304: Cannot find name 'expect'.
+__tests__/planGenerator.test.ts(134,7): error TS2304: Cannot find name 'expect'.
+__tests__/planGenerator.test.ts(138,3): error TS2593: Cannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+__tests__/planGenerator.test.ts(142,5): error TS2304: Cannot find name 'expect'.
+__tests__/planGenerator.test.ts(143,5): error TS2304: Cannot find name 'expect'.
+__tests__/planGenerator.test.ts(146,3): error TS2593: Cannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+__tests__/planGenerator.test.ts(149,5): error TS2304: Cannot find name 'expect'.
+__tests__/planGenerator.test.ts(153,5): error TS2304: Cannot find name 'expect'.
+__tests__/planGenerator.test.ts(157,1): error TS2593: Cannot find name 'describe'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+__tests__/planGenerator.test.ts(158,3): error TS2593: Cannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+__tests__/planGenerator.test.ts(160,5): error TS2304: Cannot find name 'expect'.
+__tests__/planGenerator.test.ts(163,3): error TS2593: Cannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+__tests__/planGenerator.test.ts(166,5): error TS2304: Cannot find name 'expect'.
+__tests__/planGenerator.test.ts(167,5): error TS2304: Cannot find name 'expect'.
+__tests__/planGenerator.test.ts(170,3): error TS2593: Cannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+__tests__/planGenerator.test.ts(172,5): error TS2304: Cannot find name 'expect'.
+__tests__/planGenerator.test.ts(173,5): error TS2304: Cannot find name 'expect'.
+__tests__/planGenerator.test.ts(174,5): error TS2304: Cannot find name 'expect'.
+__tests__/planGenerator.test.ts(175,5): error TS2304: Cannot find name 'expect'.
+__tests__/planGenerator.test.ts(177,5): error TS2304: Cannot find name 'expect'.
+__tests__/planGenerator.test.ts(180,3): error TS2593: Cannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+__tests__/planGenerator.test.ts(181,5): error TS2304: Cannot find name 'expect'.
+__tests__/planGenerator.test.ts(187,1): error TS2593: Cannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+__tests__/planGenerator.test.ts(188,3): error TS2304: Cannot find name 'expect'.
+__tests__/planGenerator.test.ts(190,5): error TS2304: Cannot find name 'expect'.
+__tests__/planGenerator.test.ts(191,5): error TS2304: Cannot find name 'expect'.
+__tests__/planGenerator.test.ts(195,1): error TS2593: Cannot find name 'describe'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+__tests__/planGenerator.test.ts(204,3): error TS2593: Cannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+__tests__/planGenerator.test.ts(204,103): error TS7006: Parameter 'n' implicitly has an 'any' type.
+__tests__/planGenerator.test.ts(206,51): error TS2304: Cannot find name 'expect'.
+__tests__/planGenerator.test.ts(209,7): error TS2304: Cannot find name 'expect'.
+__tests__/planGenerator.test.ts(210,31): error TS2304: Cannot find name 'expect'.
+__tests__/planGenerator.test.ts(214,3): error TS2593: Cannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+__tests__/planGenerator.test.ts(216,5): error TS2304: Cannot find name 'expect'.
+__tests__/planGenerator.test.ts(217,5): error TS2304: Cannot find name 'expect'.
+__tests__/planGenerator.test.ts(220,3): error TS2593: Cannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+__tests__/planGenerator.test.ts(225,5): error TS2304: Cannot find name 'expect'.
+__tests__/planGenerator.test.ts(228,3): error TS2593: Cannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+__tests__/planGenerator.test.ts(232,38): error TS2304: Cannot find name 'expect'.
+__tests__/planGenerator.test.ts(236,3): error TS2593: Cannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+__tests__/planGenerator.test.ts(239,5): error TS2304: Cannot find name 'expect'.
+__tests__/planGenerator.test.ts(242,3): error TS2593: Cannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+__tests__/planGenerator.test.ts(245,5): error TS2304: Cannot find name 'expect'.
+__tests__/planGenerator.test.ts(246,5): error TS2304: Cannot find name 'expect'.
+__tests__/planGenerator.test.ts(247,5): error TS2304: Cannot find name 'expect'.
+__tests__/planGenerator.test.ts(250,3): error TS2593: Cannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+__tests__/planGenerator.test.ts(255,5): error TS2304: Cannot find name 'expect'.
+__tests__/planGenerator.test.ts(257,7): error TS2304: Cannot find name 'expect'.
+__tests__/planGenerator.test.ts(258,7): error TS2304: Cannot find name 'expect'.
+__tests__/planGenerator.test.ts(259,7): error TS2304: Cannot find name 'expect'.
+__tests__/planGenerator.test.ts(263,3): error TS2593: Cannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+__tests__/planGenerator.test.ts(272,7): error TS2304: Cannot find name 'expect'.
+__tests__/planGenerator.test.ts(274,9): error TS2304: Cannot find name 'expect'.
+__tests__/planGenerator.test.ts(276,11): error TS2304: Cannot find name 'expect'.
+__tests__/planGenerator.test.ts(277,11): error TS2304: Cannot find name 'expect'.
+__tests__/planGenerator.test.ts(278,36): error TS2304: Cannot find name 'expect'.
+__tests__/planGenerator.test.ts(284,5): error TS2304: Cannot find name 'expect'.
+__tests__/planGenerator.test.ts(286,27): error TS2304: Cannot find name 'expect'.
+__tests__/planGenerator.test.ts(289,3): error TS2593: Cannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+__tests__/planGenerator.test.ts(291,5): error TS2304: Cannot find name 'expect'.
+__tests__/planGenerator.test.ts(292,5): error TS2304: Cannot find name 'expect'.
+__tests__/planGenerator.test.ts(293,5): error TS2304: Cannot find name 'expect'.
+__tests__/planGenerator.test.ts(294,5): error TS2304: Cannot find name 'expect'.
+__tests__/planGenerator.test.ts(297,3): error TS2593: Cannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+__tests__/planGenerator.test.ts(298,5): error TS2304: Cannot find name 'expect'.
+__tests__/planGenerator.test.ts(299,5): error TS2304: Cannot find name 'expect'.
+__tests__/planGenerator.test.ts(300,5): error TS2304: Cannot find name 'expect'.
+__tests__/planGenerator.test.ts(304,1): error TS2593: Cannot find name 'describe'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+__tests__/planGenerator.test.ts(305,3): error TS2593: Cannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+__tests__/planGenerator.test.ts(307,5): error TS2304: Cannot find name 'expect'.
+__tests__/planGenerator.test.ts(308,5): error TS2304: Cannot find name 'expect'.
+__tests__/planGenerator.test.ts(311,3): error TS2593: Cannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+__tests__/planGenerator.test.ts(315,5): error TS2304: Cannot find name 'expect'.
+__tests__/planGenerator.test.ts(316,5): error TS2304: Cannot find name 'expect'.
+__tests__/planGenerator.test.ts(318,5): error TS2304: Cannot find name 'expect'.
+__tests__/planGenerator.test.ts(321,3): error TS2593: Cannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+__tests__/planGenerator.test.ts(324,5): error TS2304: Cannot find name 'expect'.
+__tests__/planGenerator.test.ts(325,5): error TS2304: Cannot find name 'expect'.
+__tests__/planGenerator.test.ts(329,1): error TS2593: Cannot find name 'describe'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+__tests__/planGenerator.test.ts(330,3): error TS2593: Cannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+__tests__/planGenerator.test.ts(331,5): error TS2304: Cannot find name 'expect'.
+__tests__/planGenerator.test.ts(332,5): error TS2304: Cannot find name 'expect'.
+__tests__/planGenerator.test.ts(333,5): error TS2304: Cannot find name 'expect'.
+__tests__/planGenerator.test.ts(336,3): error TS2593: Cannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+__tests__/planGenerator.test.ts(337,5): error TS2304: Cannot find name 'expect'.
+__tests__/planGenerator.test.ts(338,5): error TS2304: Cannot find name 'expect'.
+__tests__/planGenerator.test.ts(339,5): error TS2304: Cannot find name 'expect'.
+__tests__/planGenerator.test.ts(340,5): error TS2304: Cannot find name 'expect'.
+__tests__/planGenerator.test.ts(343,3): error TS2593: Cannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+__tests__/planGenerator.test.ts(344,5): error TS2304: Cannot find name 'expect'.
+__tests__/planGenerator.test.ts(345,5): error TS2304: Cannot find name 'expect'.
+__tests__/planGenerator.test.ts(346,5): error TS2304: Cannot find name 'expect'.
+__tests__/planGenerator.test.ts(347,5): error TS2304: Cannot find name 'expect'.
+__tests__/planGenerator.test.ts(350,3): error TS2593: Cannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+__tests__/planGenerator.test.ts(351,5): error TS2304: Cannot find name 'expect'.
+__tests__/planGenerator.test.ts(352,5): error TS2304: Cannot find name 'expect'.
+__tests__/planGenerator.test.ts(356,1): error TS2593: Cannot find name 'test'. Do you need to install type definitions for a test runner? Try `npm i --save-dev @types/jest` or `npm i --save-dev @types/mocha` and then add 'jest' or 'mocha' to the types field in your tsconfig.
+__tests__/planGenerator.test.ts(357,3): error TS2304: Cannot find name 'expect'.
+__tests__/planGenerator.test.ts(358,3): error TS2304: Cannot find name 'expect'.
+__tests__/planGenerator.test.ts(359,3): error TS2304: Cannot find name 'expect'.
+__tests__/planGenerator.test.ts(360,3): error TS2304: Cannot find name 'expect'.
+__tests__/planGenerator.test.ts(361,3): error TS2304: Cannot find name 'expect'.
+app/(tabs)/_layout.tsx(41,78): error TS2322: Type '____ColorValue_Internal' is not assignable to type 'string | NativeColorValue | undefined'.
+  Type 'null' is not assignable to type 'string | NativeColorValue | undefined'.
