@@ -38,7 +38,7 @@ export default function TabsLayout() {
           options={{
             title: tab.title,
             tabBarIcon: ({ color, focused }) => (
-              <Ionicons name={focused ? tab.iconActive : tab.icon} size={24} color={color} />
+              <Ionicons name={focused ? tab.iconActive : tab.icon} size={24} color={color as string} />
             ),
           }}
         />

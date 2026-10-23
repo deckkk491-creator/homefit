@@ -43,12 +43,13 @@
             "backgroundColor": "#0E0F0C"
           }
         }
-      ]
+      ],
+      "expo-font",
+      "expo-status-bar"
     ],
     "locales": {
       "ru": "./locales/ru.json"
     },
-    "newArchEnabled": true,
     "experiments": {
       "typedRoutes": false
     }
