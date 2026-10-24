@@ -3,7 +3,7 @@ import { router } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { Alert } from 'react-native';
 
-import { BodyFields, DayPicker, EquipmentFields, GoalFields, LevelFields } from '@/components/ProfileFields';
+import { BodyFields, DayPicker, DifficultyFields, EquipmentFields, GoalFields, LevelFields, LimitationFields } from '@/components/ProfileFields';
 import { Button, Card, Gap, Row, Screen, SectionLabel, T } from '@/components/ui';
 import { LEVEL_LABELS } from '@/data/exercises';
 import { computeLevel } from '@/lib/planGenerator';
@@ -56,8 +56,12 @@ export default function ProfileScreen() {
       <GoalFields profile={draft} onChange={setDraft} />
       <SectionLabel>Уровень</SectionLabel>
       <LevelFields profile={draft} onChange={setDraft} />
+      <SectionLabel>Сложность плана</SectionLabel>
+      <DifficultyFields profile={draft} onChange={setDraft} />
       <SectionLabel>Инвентарь</SectionLabel>
       <EquipmentFields profile={draft} onChange={setDraft} />
+      <SectionLabel>Здоровье и ограничения</SectionLabel>
+      <LimitationFields profile={draft} onChange={setDraft} />
       <SectionLabel>Дни тренировок</SectionLabel>
       <DayPicker days={days} onChange={setDraftDays} />
 

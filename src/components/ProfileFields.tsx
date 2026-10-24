@@ -1,9 +1,11 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { Pressable, StyleSheet, View } from 'react-native';
 
+import { BmiGauge } from '@/components/BmiGauge';
 import { Choice, Row, SectionLabel, Stepper, T, ToggleRow } from '@/components/ui';
-import { bmi, MAX_DAYS, MIN_DAYS, RECOMMENDED_DAYS, WEEKDAY_SHORT } from '@/lib/planGenerator';
-import type { Goal, Profile, Sex, Weekday } from '@/lib/types';
+import { bmi, LIMITATIONS, MAX_DAYS, MIN_DAYS, RECOMMENDED_DAYS, WEEKDAY_SHORT } from '@/lib/planGenerator';
+import { LIMITATION_LABELS } from '@/data/exercises';
+import type { Difficulty, Goal, Limitation, Profile, Sex, Weekday } from '@/lib/types';
 import { radius, space, useTheme } from '@/theme';
 
 type P = { profile: Profile; onChange: (p: Profile) => void };
@@ -36,11 +38,7 @@ export function BodyFields({ profile, onChange }: P) {
       <Stepper label="Возраст" value={profile.age} min={14} max={90} onChange={(age) => set({ age })} unit="лет" />
       <Stepper label="Рост" value={profile.heightCm} min={120} max={230} onChange={(heightCm) => set({ heightCm })} unit="см" />
       <Stepper label="Вес" value={profile.weightKg} min={35} max={250} step={0.5} onChange={(weightKg) => set({ weightKg })} unit="кг" />
-      {b > 0 ? (
-        <T variant="small" color={t.textMuted} style={{ marginTop: space.xs }}>
-          Индекс массы тела: {b.toFixed(1)}
-        </T>
-      ) : null}
+      {b > 0 ? <BmiGauge heightCm={profile.heightCm} weightKg={profile.weightKg} /> : null}
     </View>
   );
 }
@@ -162,12 +160,72 @@ export function EquipmentFields({ profile, onChange }: P) {
         value={eq.bench}
         onChange={(bench) => setEq({ bench })}
       />
+      {eq.bench ? (
+        <View style={[styles.nested, { borderColor: t.border }]}>
+          <T variant="small" color={t.textMuted} style={{ marginBottom: space.sm }}>
+            Что именно есть дома?
+          </T>
+          <Row gap={space.sm}>
+            <SegmentButton label="Скамья" selected={eq.benchType !== 'chair'} onPress={() => setEq({ benchType: 'bench' })} />
+            <SegmentButton label="Стул" selected={eq.benchType === 'chair'} onPress={() => setEq({ benchType: 'chair' })} />
+          </Row>
+          {eq.benchType === 'chair' ? (
+            <T variant="small" color={t.textMuted} style={{ marginTop: space.sm }}>
+              Покажем, как делать упражнения на стуле. Те, что делают лёжа на скамье, заменим вариантами на полу.
+            </T>
+          ) : null}
+        </View>
+      ) : null}
       {nothing ? (
         <T variant="small" color={t.textMuted} style={{ marginTop: space.sm }}>
           Без инвентаря — тоже отлично: план будет с весом собственного тела.
         </T>
       ) : null}
     </View>
+  );
+}
+
+/** Опросник: травмы и ограничения. Упражнения, нагружающие отмеченные зоны, в план не попадут. */
+export function LimitationFields({ profile, onChange }: P) {
+  const t = useTheme();
+  const list = profile.limitations ?? [];
+  const toggle = (l: Limitation) =>
+    onChange({ ...profile, limitations: list.includes(l) ? list.filter((x) => x !== l) : [...list, l] });
+  return (
+    <View>
+      {LIMITATIONS.map((l) => (
+        <ToggleRow
+          key={l}
+          label={LIMITATION_LABELS[l].title}
+          hint={LIMITATION_LABELS[l].hint}
+          value={list.includes(l)}
+          onChange={() => toggle(l)}
+        />
+      ))}
+      <T variant="small" color={t.textMuted} style={{ marginTop: space.sm }}>
+        {list.length
+          ? 'Подберём упражнения, которые не нагружают эти зоны. При острой боли, недавней травме или операции сначала посоветуйся с врачом.'
+          : 'Если ничего не беспокоит — просто нажми «Далее».'}
+      </T>
+    </View>
+  );
+}
+
+const DIFFICULTY: { value: Difficulty; label: string }[] = [
+  { value: -1, label: 'Легче' },
+  { value: 0, label: 'Как рассчитано' },
+  { value: 1, label: 'Тяжелее' },
+];
+
+/** Ручная поправка сложности поверх расчётного уровня */
+export function DifficultyFields({ profile, onChange }: P) {
+  const current = profile.difficulty ?? 0;
+  return (
+    <Row gap={space.sm} style={{ flexWrap: 'wrap' }}>
+      {DIFFICULTY.map((d) => (
+        <SegmentButton key={d.value} label={d.label} selected={current === d.value} onPress={() => onChange({ ...profile, difficulty: d.value })} />
+      ))}
+    </Row>
   );
 }
 

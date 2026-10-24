@@ -360,3 +360,86 @@ test('plural — склонение', () => {
   expect(plural(11, 'упражнение', 'упражнения', 'упражнений')).toBe('11 упражнений');
   expect(plural(21, 'упражнение', 'упражнения', 'упражнений')).toBe('21 упражнение');
 });
+
+// ───────────── Ограничения, стул, сложность, замены ─────────────
+
+import { alternativesFor, computeBaseLevel, LIMITATIONS } from '@/lib/planGenerator';
+
+const allIds = (p: Profile) =>
+  Object.values(generatePlan(p, [0, 2, 4]).workouts).flatMap((w) => w.exercises.map((e) => e.exerciseId));
+
+const fullGear = (extra: Partial<Profile> = {}): Profile =>
+  withEq(
+    {
+      pullupBar: true,
+      dumbbells: { has: true, weightKg: 20, adjustable: true },
+      barbell: { has: true, maxKg: 80 },
+      bands: true,
+      bench: true,
+    },
+    { maxPushups: 35, maxPullups: 10, ...extra },
+  );
+
+test('ограничения исключают упражнения, нагружающие отмеченные зоны', () => {
+  for (const lim of LIMITATIONS) {
+    const ids = allIds(fullGear({ limitations: [lim] }));
+    for (const id of ids) {
+      expect(EXERCISE_BY_ID[id].stresses ?? []).not.toContain(lim);
+    }
+  }
+});
+
+test('с коленями, спиной или давлением — без прыжков', () => {
+  for (const lim of ['knees', 'back', 'pressure'] as const) {
+    const ids = allIds(fullGear({ limitations: [lim] }));
+    expect(ids.some((id) => EXERCISE_BY_ID[id].impact)).toBe(false);
+  }
+});
+
+test('план не пустеет даже при всех ограничениях', () => {
+  const plan = generatePlan(fullGear({ limitations: [...LIMITATIONS] }), [0, 2, 4]);
+  for (const w of Object.values(plan.workouts)) expect(w.exercises.length).toBeGreaterThanOrEqual(3);
+});
+
+test('стул вместо скамьи: нет упражнений лёжа на скамье', () => {
+  const p = fullGear();
+  p.equipment = { ...p.equipment, benchType: 'chair' };
+  const ids = allIds(p);
+  for (const id of ids) {
+    const ex = EXERCISE_BY_ID[id];
+    if (ex.requires.includes('bench') && ex.chair) expect(ex.chair.ok).toBe(true);
+  }
+  // а на скамье жим лёжа доступен
+  expect(alternativesFor('Dumbbell_Floor_Press', fullGear(), 'advanced').map((e) => e.id)).toContain('Dumbbell_Bench_Press');
+  expect(alternativesFor('Dumbbell_Floor_Press', p, 'advanced').map((e) => e.id)).not.toContain('Dumbbell_Bench_Press');
+});
+
+test('сложность: легче/тяжелее сдвигает уровень, но не обходит ограничения безопасности', () => {
+  const mid = fullGear({ maxPushups: 15, maxPullups: 3 });
+  expect(computeLevel(mid)).toBe('intermediate');
+  expect(computeLevel({ ...mid, difficulty: -1 })).toBe('beginner');
+  expect(computeLevel({ ...mid, difficulty: 1 })).toBe('advanced');
+  expect(computeBaseLevel({ ...mid, difficulty: 1 })).toBe('intermediate');
+  // ИМТ ≥ 35 — всегда новичок
+  expect(computeLevel({ ...mid, weightKg: 120, heightCm: 180, difficulty: 1 })).toBe('beginner');
+  // 60+ — не выше среднего
+  expect(computeLevel({ ...mid, age: 65, difficulty: 1 })).toBe('intermediate');
+});
+
+test('замены: тот же тип движения первым, без уже выбранных и с учётом ограничений', () => {
+  const p = fullGear();
+  const alts = alternativesFor('Goblet_Squat', p, 'advanced', ['Barbell_Squat']);
+  expect(alts.length).toBeGreaterThan(0);
+  expect(alts[0].pattern).toBe('squat');
+  expect(alts.map((e) => e.id)).not.toContain('Goblet_Squat');
+  expect(alts.map((e) => e.id)).not.toContain('Barbell_Squat');
+  const knees = alternativesFor('Goblet_Squat', { ...p, limitations: ['knees'] }, 'advanced');
+  for (const e of knees) expect(e.stresses ?? []).not.toContain('knees');
+});
+
+test('sanitizeProfile: старые профили без новых полей работают', () => {
+  const s = sanitizeProfile(base);
+  expect(s.limitations).toEqual([]);
+  expect(s.difficulty).toBe(0);
+  expect(s.equipment.benchType).toBe('bench');
+});

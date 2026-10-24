@@ -24,6 +24,9 @@ const palette = {
     accentStrong: '#4E6B00',
     danger: '#B0360A',
     success: '#3F7D20',
+    /** Зоны шкалы ИМТ: недовес и «внимание» (графика ≥ 3:1 на фоне) */
+    info: '#2C6CA3',
+    warn: '#8F5A00',
     overlay: 'rgba(20,21,18,0.06)',
     /** Подложка фото упражнений (снимки на белом фоне). */
     photoBg: '#FFFFFF',
@@ -41,6 +44,8 @@ const palette = {
     accentStrong: '#C8F53C',
     danger: '#FB923C',
     success: '#A3E635',
+    info: '#7FB8E8',
+    warn: '#FBBF24',
     overlay: 'rgba(244,243,238,0.06)',
     photoBg: '#FFFFFF',
   },

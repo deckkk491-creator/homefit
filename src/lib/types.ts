@@ -7,6 +7,12 @@ export type Level = 'beginner' | 'intermediate' | 'advanced';
 /** 0 = понедельник … 6 = воскресенье */
 export type Weekday = 0 | 1 | 2 | 3 | 4 | 5 | 6;
 
+/** Травмы и ограничения, которые учитываются при подборе упражнений. */
+export type Limitation = 'knees' | 'back' | 'shoulders' | 'wrists' | 'neck' | 'pressure';
+
+/** Ручная поправка сложности: -1 — легче, 0 — как рассчитано, 1 — тяжелее. */
+export type Difficulty = -1 | 0 | 1;
+
 /** Инвентарь, который может требоваться упражнению. */
 export type Gear = 'bar' | 'dumbbells' | 'barbell' | 'bands' | 'bench';
 
@@ -18,6 +24,8 @@ export interface Equipment {
   bands: boolean;
   /** Скамья или устойчивый стул */
   bench: boolean;
+  /** Что именно есть: скамья или стул (у стула меньше вариантов — лёжа на нём не позанимаешься) */
+  benchType?: 'bench' | 'chair';
 }
 
 export interface Profile {
@@ -29,6 +37,10 @@ export interface Profile {
   maxPushups: number;
   maxPullups: number;
   equipment: Equipment;
+  /** Травмы и ограничения (опросник) */
+  limitations?: Limitation[];
+  /** Поправка сложности плана */
+  difficulty?: Difficulty;
 }
 
 /** Двигательный паттерн — «слот» в тренировке. */
@@ -77,6 +89,10 @@ export interface Exercise {
   priority?: number;
   /** Повторы считаются от максимума отжиманий/подтягиваний. */
   repsFrom?: 'pushups' | 'pullups';
+  /** Нагружает эти зоны — исключается при соответствующих ограничениях. */
+  stresses?: Limitation[];
+  /** Вариант со стулом вместо скамьи: ok=false — на стуле делать нельзя (будет замена). */
+  chair?: { ok: boolean; steps?: string[]; tip?: string };
 }
 
 export interface PlannedExercise {

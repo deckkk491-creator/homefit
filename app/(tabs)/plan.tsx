@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { Pressable, View } from 'react-native';
 
 import { Card, Gap, Pill, Row, Screen, SectionLabel, T } from '@/components/ui';
+import { ChangePlanSheet } from '@/components/ChangePlanSheet';
 import { ExerciseThumb } from '@/components/workout';
 import { getExercise, LEVEL_LABELS } from '@/data/exercises';
 import { GOALS } from '@/components/ProfileFields';
@@ -27,6 +28,7 @@ export default function PlanScreen() {
   const [selected, setSelected] = useState<Weekday>(() =>
     plan && plan.days.includes(today) ? today : (plan?.days.find((d) => d > today) ?? plan?.days[0] ?? 0)
   );
+  const [changing, setChanging] = useState(false);
   if (!plan) return null;
 
   const week = weekIndex(plan, now);
@@ -52,6 +54,27 @@ export default function PlanScreen() {
         <Pill label={goal?.title ?? ''} />
         <Pill label={plan.splitName} />
       </Row>
+      <Gap h={space.md} />
+      <Pressable
+        accessibilityRole="button"
+        onPress={() => setChanging(true)}
+        style={({ pressed }) => ({
+          flexDirection: 'row',
+          alignItems: 'center',
+          gap: space.sm,
+          alignSelf: 'flex-start',
+          minHeight: 44,
+          paddingHorizontal: space.lg,
+          borderRadius: radius.pill,
+          backgroundColor: t.accent,
+          opacity: pressed ? 0.85 : 1,
+        })}>
+        <Ionicons name="options-outline" size={18} color={t.accentInk} />
+        <T variant="bodyStrong" color={t.accentInk}>
+          Изменить план
+        </T>
+      </Pressable>
+      <ChangePlanSheet visible={changing} onClose={() => setChanging(false)} />
       <Gap h={space.xl} />
 
       {/* Неделя */}

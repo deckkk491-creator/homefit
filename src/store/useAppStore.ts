@@ -2,7 +2,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
 
-import { generatePlan, RECOMMENDED_DAYS } from '@/lib/planGenerator';
+import { getExercise } from '@/data/exercises';
+import { generatePlan, planExercise, RECOMMENDED_DAYS, sanitizeProfile } from '@/lib/planGenerator';
 import type { Plan, Profile, Weekday, WorkoutLog } from '@/lib/types';
 
 export const DEFAULT_PROFILE: Profile = {
@@ -19,7 +20,10 @@ export const DEFAULT_PROFILE: Profile = {
     barbell: { has: false, maxKg: 40 },
     bands: false,
     bench: false,
+    benchType: 'bench',
   },
+  limitations: [],
+  difficulty: 0,
 };
 
 /** Прогресс текущей (незавершённой) тренировки. */
@@ -53,6 +57,12 @@ interface AppState {
   finishSession: (log: Omit<WorkoutLog, 'id'>) => void;
   discardSession: () => void;
   deleteLog: (id: string) => void;
+  /** Заменить упражнение в тренировке (насовсем — до пересоздания плана) */
+  replaceExercise: (workoutKey: string, index: number, exerciseId: string) => void;
+  /** Убрать упражнение из тренировки */
+  removeExercise: (workoutKey: string, index: number) => void;
+  /** Начать заново: анкета с начала, журнал тренировок сохраняется */
+  restartOnboarding: () => void;
   resetAll: () => void;
 }
 
@@ -101,6 +111,37 @@ export const useAppStore = create<AppState>()(
       },
       discardSession: () => set({ session: null }),
       deleteLog: (id) => set({ logs: get().logs.filter((l) => l.id !== id) }),
+      replaceExercise: (key, index, exerciseId) => {
+        const { plan, profile, session } = get();
+        const w = plan?.workouts[key];
+        const ex = getExercise(exerciseId);
+        if (!plan || !w || !ex || !w.exercises[index]) return;
+        const exercises = [...w.exercises];
+        exercises[index] = planExercise(ex, sanitizeProfile(profile), plan.level);
+        // Отметки подходов заменённого упражнения больше не относятся к нему
+        const nextSession =
+          session && session.workoutKey === key ? { ...session, done: { ...session.done, [index]: [] } } : session;
+        set({ plan: { ...plan, workouts: { ...plan.workouts, [key]: { ...w, exercises } } }, session: nextSession });
+      },
+      removeExercise: (key, index) => {
+        const { plan, session } = get();
+        const w = plan?.workouts[key];
+        if (!plan || !w || !w.exercises[index] || w.exercises.length <= 1) return;
+        const exercises = w.exercises.filter((_, i) => i !== index);
+        let nextSession = session;
+        if (session && session.workoutKey === key) {
+          // Номера упражнений после удалённого сдвигаются — сдвигаем и отметки
+          const done: Record<number, boolean[]> = {};
+          for (const [k, v] of Object.entries(session.done)) {
+            const i = Number(k);
+            if (i < index) done[i] = v;
+            else if (i > index) done[i - 1] = v;
+          }
+          nextSession = { ...session, done };
+        }
+        set({ plan: { ...plan, workouts: { ...plan.workouts, [key]: { ...w, exercises } } }, session: nextSession });
+      },
+      restartOnboarding: () => set({ onboarded: false, session: null }),
       resetAll: () =>
         set({
           disclaimerAccepted: false,

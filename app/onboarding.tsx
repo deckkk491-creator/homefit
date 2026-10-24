@@ -8,6 +8,7 @@ import {
   EquipmentFields,
   GoalFields,
   LevelFields,
+  LimitationFields,
 } from '@/components/ProfileFields';
 import { Button, Gap, Row, Screen, T } from '@/components/ui';
 import { useAppStore } from '@/store/useAppStore';
@@ -18,6 +19,7 @@ const STEPS = [
   { title: 'Твоя цель', hint: 'От цели зависят подходы, повторения и отдых.' },
   { title: 'Текущий уровень', hint: 'Честный ответ — безопасный старт.' },
   { title: 'Инвентарь дома', hint: 'Отметь всё, что есть под рукой.' },
+  { title: 'Здоровье', hint: 'Есть травмы или что-то беспокоит? Отметь — и мы не дадим упражнения, которые это нагружают.' },
   { title: 'Дни тренировок', hint: 'Выбери дни недели для занятий.' },
 ];
 
@@ -83,7 +85,8 @@ export default function Onboarding() {
       {step === 1 && <GoalFields profile={profile} onChange={setProfile} />}
       {step === 2 && <LevelFields profile={profile} onChange={setProfile} />}
       {step === 3 && <EquipmentFields profile={profile} onChange={setProfile} />}
-      {step === 4 && <DayPicker days={days} onChange={setDays} />}
+      {step === 4 && <LimitationFields profile={profile} onChange={setProfile} />}
+      {step === 5 && <DayPicker days={days} onChange={setDays} />}
     </Screen>
   );
 }

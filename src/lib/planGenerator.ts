@@ -5,8 +5,10 @@
  */
 import { EXERCISES } from '@/data/exercises';
 import type {
+  Difficulty,
   Exercise,
   Gear,
+  Limitation,
   Goal,
   Level,
   Pattern,
@@ -18,6 +20,7 @@ import type {
 } from './types';
 
 export const LEVELS: Level[] = ['beginner', 'intermediate', 'advanced'];
+export const LIMITATIONS: Limitation[] = ['knees', 'back', 'shoulders', 'wrists', 'neck', 'pressure'];
 export const RECOMMENDED_DAYS: Weekday[] = [0, 2, 4];
 export const MIN_DAYS = 2;
 export const MAX_DAYS = 6;
@@ -40,8 +43,11 @@ export function sanitizeProfile(p: Profile): Profile {
     weightKg: clampNum(p.weightKg, 35, 250, 75),
     maxPushups: Math.round(clampNum(p.maxPushups, 0, 150, 0)),
     maxPullups: e.pullupBar ? Math.round(clampNum(p.maxPullups, 0, 60, 0)) : 0,
+    limitations: Array.isArray(p.limitations) ? p.limitations.filter((l) => LIMITATIONS.includes(l)) : [],
+    difficulty: p.difficulty === -1 || p.difficulty === 1 ? p.difficulty : 0,
     equipment: {
       ...e,
+      benchType: e.benchType === 'chair' ? 'chair' : 'bench',
       dumbbells: { ...e.dumbbells, weightKg: clampNum(e.dumbbells.weightKg, 0, 60, 0) },
       barbell: { ...e.barbell, maxKg: clampNum(e.barbell.maxKg, 0, 300, 0) },
     },
@@ -54,8 +60,13 @@ export function bmi(p: Pick<Profile, 'heightCm' | 'weightKg'>): number {
   return Math.round((p.weightKg / (h * h)) * 10) / 10;
 }
 
+/** Уровень без ручной поправки — чтобы показать, что именно поменяла «легче / тяжелее». */
+export function computeBaseLevel(p: Profile): Level {
+  return computeLevel({ ...p, difficulty: 0 });
+}
+
 /**
- * Уровень подготовки по отжиманиям, подтягиваниям, ИМТ и возрасту.
+ * Уровень подготовки по отжиманиям, подтягиваниям, ИМТ, возрасту и ручной поправке сложности.
  * Отжимания: <10 → 0, 10–29 → 1, ≥30 → 2. Подтягивания: 0 → 0, 1–7 → 1, ≥8 → 2.
  * Без турника подтягивания не учитываются.
  */
@@ -69,6 +80,9 @@ export function computeLevel(p: Profile): Level {
     score = push;
   }
   let rank = score >= 1.75 ? 2 : score >= 0.75 ? 1 : 0;
+  // Ручная поправка «легче / тяжелее» — до ограничений безопасности ниже
+  const diff: Difficulty = p.difficulty === -1 || p.difficulty === 1 ? p.difficulty : 0;
+  rank = Math.max(0, Math.min(2, rank + diff));
 
   const b = bmi(p);
   if (b >= 35) rank = 0;
@@ -99,7 +113,54 @@ export function isEligible(ex: Exercise, p: Profile, level: Level, gear: Set<Gea
   if (ex.minPullups !== undefined && p.maxPullups < ex.minPullups) return false;
   if (ex.maxPullups !== undefined && p.maxPullups > ex.maxPullups) return false;
   if (ex.impact && (bmi(p) >= 30 || p.age >= 55)) return false;
+  // Ограничения по здоровью: упражнение не должно нагружать проблемные зоны
+  const lim = p.limitations ?? [];
+  if (lim.length) {
+    if (ex.stresses?.some((z) => lim.includes(z))) return false;
+    if (ex.impact && (lim.includes('knees') || lim.includes('back') || lim.includes('pressure'))) return false;
+  }
+  // Стул вместо скамьи: лёжа на стуле не позанимаешься
+  if (ex.requires.includes('bench') && p.equipment.benchType === 'chair' && ex.chair && !ex.chair.ok) return false;
   return true;
+}
+
+/** Похожие двигательные паттерны: чем заменить упражнение, если подходящих в своём нет. */
+const RELATED: Record<Pattern, Pattern[]> = {
+  squat: ['lunge', 'glutes'],
+  lunge: ['squat', 'glutes'],
+  hinge: ['glutes'],
+  glutes: ['hinge', 'squat'],
+  push_h: ['push_v', 'triceps'],
+  push_v: ['push_h', 'delts'],
+  pull_v: ['pull_h'],
+  pull_h: ['pull_v', 'delts'],
+  delts: ['push_v', 'pull_h'],
+  biceps: ['pull_h', 'pull_v'],
+  triceps: ['push_h'],
+  calves: ['squat', 'lunge'],
+  core: [],
+};
+
+/**
+ * Чем заменить упражнение: сначала тот же паттерн, потом похожие.
+ * Учитывает инвентарь, уровень и ограничения; не предлагает то, что уже есть в тренировке.
+ */
+export function alternativesFor(exerciseId: string, profile: Profile, level: Level, exclude: string[] = []): Exercise[] {
+  const ex = EXERCISES.find((e) => e.id === exerciseId);
+  if (!ex) return [];
+  const p = sanitizeProfile(profile);
+  const gear = availableGear(p);
+  const skip = new Set([exerciseId, ...exclude]);
+  const out: Exercise[] = [];
+  for (const pattern of [ex.pattern, ...RELATED[ex.pattern]]) {
+    for (const c of rankCandidates(pattern, p, level, gear)) {
+      if (!skip.has(c.id)) {
+        out.push(c);
+        skip.add(c.id);
+      }
+    }
+  }
+  return out;
 }
 
 const LOWER: Pattern[] = ['squat', 'hinge', 'lunge', 'calves', 'glutes'];
@@ -384,7 +445,7 @@ export function buildWorkout(def: TemplateDef, p: Profile, level: Level, gear: S
   return { key: def.key, title: def.title, focus: def.focus, exercises };
 }
 
-function tipsFor(level: Level, goal: Goal): string[] {
+function tipsFor(level: Level, goal: Goal, limitations: Limitation[] = [], chair = false): string[] {
   const tips = [
     'Перед тренировкой — 5–7 минут разминки: суставная гимнастика и лёгкое кардио.',
     'Двойная прогрессия: когда во всех подходах выполнишь верхнюю границу повторений — добавь вес или переходи к более сложному варианту.',
@@ -394,6 +455,10 @@ function tipsFor(level: Level, goal: Goal): string[] {
   if (goal === 'strength') tips.push('Для роста мышц ешь достаточно белка (≈ 1,6 г на кг веса) и спи 7–9 часов.');
   if (goal === 'tone') tips.push('Отдыхай между подходами недолго и проходи 7–10 тысяч шагов в день.');
   if (goal === 'fitness') tips.push('Регулярность важнее интенсивности: не пропускай тренировки.');
+  if (limitations.length)
+    tips.push('С учётом твоих ограничений часть упражнений исключена. Если что-то вызывает боль — остановись и замени упражнение; при травмах сначала посоветуйся с врачом.');
+  if (limitations.includes('pressure')) tips.push('Не задерживай дыхание на усилии: выдох — на самой тяжёлой части движения.');
+  if (chair) tips.push('Стул для упражнений — крепкий, без колёсиков, придвинутый спинкой к стене.');
   return tips;
 }
 
@@ -440,7 +505,7 @@ export function generatePlan(profile: Profile, days: Weekday[], now: Date = new 
     workouts,
     rotation: split.rotation,
     splitName: split.name,
-    tips: tipsFor(level, p.goal),
+    tips: tipsFor(level, p.goal, p.limitations, p.equipment.bench && p.equipment.benchType === 'chair'),
   };
 }
 

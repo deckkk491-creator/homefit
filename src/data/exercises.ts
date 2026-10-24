@@ -9,6 +9,7 @@ export const EXERCISES: Exercise[] = [
   // ───────────── Отжимания и жимы ─────────────
   {
     id: 'Pushups',
+    stresses: ['wrists', 'shoulders'],
     name: 'Отжимания от пола',
     pattern: 'push_h',
     loadType: 'bodyweight',
@@ -32,6 +33,7 @@ export const EXERCISES: Exercise[] = [
   },
   {
     id: 'Incline_Push-Up',
+    stresses: ['wrists'],
     name: 'Отжимания с опорой на возвышение',
     pattern: 'push_h',
     loadType: 'bodyweight',
@@ -53,6 +55,8 @@ export const EXERCISES: Exercise[] = [
   },
   {
     id: 'Decline_Push-Up',
+    chair: { ok: true, tip: 'Стул упри спинкой в стену, ноги поставь на сиденье.', steps: ['Поставь стул спинкой к стене, чтобы он не уехал. Сиденье — не мягкое и не на колёсиках.', 'Встань в упор лёжа, носки поставь на край сиденья.', 'Тело — прямая линия от пяток до макушки, пресс напряжён.', 'Опусти грудь к полу, локти под углом около 45°, и выжми себя вверх.'] },
+    stresses: ['wrists', 'shoulders', 'pressure'],
     name: 'Отжимания с ногами на возвышении',
     pattern: 'push_h',
     loadType: 'bodyweight',
@@ -71,6 +75,7 @@ export const EXERCISES: Exercise[] = [
   },
   {
     id: 'Push-Up_Wide',
+    stresses: ['wrists', 'shoulders'],
     name: 'Отжимания широким хватом',
     pattern: 'push_h',
     loadType: 'bodyweight',
@@ -88,6 +93,7 @@ export const EXERCISES: Exercise[] = [
   },
   {
     id: 'Push-Ups_-_Close_Triceps_Position',
+    stresses: ['wrists'],
     name: 'Отжимания узким хватом',
     pattern: 'triceps',
     loadType: 'bodyweight',
@@ -105,6 +111,8 @@ export const EXERCISES: Exercise[] = [
   },
   {
     id: 'Bench_Dips',
+    chair: { ok: true, tip: 'Обратные отжимания от стула — классика: стул спинкой к стене.', steps: ['Поставь стул спинкой к стене. Сядь на край сиденья, ладони рядом с бёдрами, пальцы вперёд.', 'Сдвинь таз вперёд с сиденья, ноги согни под 90° (легче) или выпрями (сложнее).', 'Опускайся, сгибая локти назад до угла около 90°, плечи не поднимай к ушам.', 'Выжми себя вверх за счёт трицепса до прямых рук.'] },
+    stresses: ['shoulders', 'wrists'],
     name: 'Обратные отжимания от скамьи',
     pattern: 'triceps',
     loadType: 'bodyweight',
@@ -125,6 +133,7 @@ export const EXERCISES: Exercise[] = [
   },
   {
     id: 'Dumbbell_Bench_Press',
+    chair: { ok: false },
     name: 'Жим гантелей лёжа',
     pattern: 'push_h',
     loadType: 'dumbbell',
@@ -177,6 +186,7 @@ export const EXERCISES: Exercise[] = [
   },
   {
     id: 'Standing_Dumbbell_Press',
+    stresses: ['shoulders', 'back'],
     name: 'Жим гантелей стоя',
     pattern: 'push_v',
     loadType: 'dumbbell',
@@ -195,6 +205,8 @@ export const EXERCISES: Exercise[] = [
   },
   {
     id: 'Seated_Dumbbell_Press',
+    chair: { ok: true, tip: 'Сядь на стул со спинкой — она поддержит поясницу.', steps: ['Сядь на стул со спинкой, стопы на полу на ширине плеч, спина прижата к спинке.', 'Подними гантели к плечам, ладони смотрят вперёд.', 'На выдохе выжми гантели вверх, не прогибаясь в пояснице.', 'Медленно опусти до уровня ушей.'] },
+    stresses: ['shoulders'],
     name: 'Жим гантелей сидя',
     pattern: 'push_v',
     loadType: 'dumbbell',
@@ -212,6 +224,7 @@ export const EXERCISES: Exercise[] = [
   },
   {
     id: 'Standing_Military_Press',
+    stresses: ['shoulders', 'back', 'neck'],
     name: 'Армейский жим штанги стоя',
     pattern: 'push_v',
     loadType: 'barbell',
@@ -229,6 +242,7 @@ export const EXERCISES: Exercise[] = [
   },
   {
     id: 'Shoulder_Press_-_With_Bands',
+    stresses: ['shoulders'],
     name: 'Жим резинки вверх',
     pattern: 'push_v',
     loadType: 'band',
@@ -311,6 +325,7 @@ export const EXERCISES: Exercise[] = [
   // ───────────── Тяги ─────────────
   {
     id: 'Pullups',
+    stresses: ['shoulders'],
     name: 'Подтягивания прямым хватом',
     pattern: 'pull_v',
     loadType: 'bodyweight',
@@ -330,6 +345,7 @@ export const EXERCISES: Exercise[] = [
   },
   {
     id: 'Chin-Up',
+    stresses: ['shoulders'],
     name: 'Подтягивания обратным хватом',
     pattern: 'pull_v',
     loadType: 'bodyweight',
@@ -401,6 +417,7 @@ export const EXERCISES: Exercise[] = [
   },
   {
     id: 'One-Arm_Dumbbell_Row',
+    chair: { ok: true, tip: 'Обопрись рукой и коленом о сиденье стула, стул — к стене.', steps: ['Поставь стул к стене. Обопрись одной ладонью и коленом той же стороны о сиденье.', 'Вторая нога стоит на полу, спина ровная и параллельна полу.', 'Тяни гантель к поясу, локоть идёт вдоль корпуса.', 'Медленно опусти до прямой руки и повтори.'] },
     name: 'Тяга гантели одной рукой',
     pattern: 'pull_h',
     loadType: 'dumbbell',
@@ -420,6 +437,7 @@ export const EXERCISES: Exercise[] = [
   },
   {
     id: 'Bent_Over_Two-Dumbbell_Row',
+    stresses: ['back'],
     name: 'Тяга гантелей в наклоне',
     pattern: 'pull_h',
     loadType: 'dumbbell',
@@ -438,6 +456,7 @@ export const EXERCISES: Exercise[] = [
   },
   {
     id: 'Bent_Over_Barbell_Row',
+    stresses: ['back'],
     name: 'Тяга штанги в наклоне',
     pattern: 'pull_h',
     loadType: 'barbell',
@@ -474,6 +493,7 @@ export const EXERCISES: Exercise[] = [
   },
   {
     id: 'Freehand_Jump_Squat',
+    stresses: ['knees', 'back', 'pressure'],
     name: 'Приседания с выпрыгиванием',
     pattern: 'squat',
     loadType: 'bodyweight',
@@ -525,6 +545,7 @@ export const EXERCISES: Exercise[] = [
   },
   {
     id: 'Barbell_Squat',
+    stresses: ['knees', 'back', 'neck', 'pressure'],
     name: 'Приседания со штангой',
     pattern: 'squat',
     loadType: 'barbell',
@@ -558,6 +579,7 @@ export const EXERCISES: Exercise[] = [
   },
   {
     id: 'Bodyweight_Walking_Lunge',
+    stresses: ['knees'],
     name: 'Выпады с весом тела',
     pattern: 'lunge',
     loadType: 'bodyweight',
@@ -575,6 +597,7 @@ export const EXERCISES: Exercise[] = [
   },
   {
     id: 'Split_Squats',
+    stresses: ['knees', 'back', 'pressure'],
     name: 'Прыжковые выпады',
     pattern: 'lunge',
     loadType: 'bodyweight',
@@ -591,6 +614,7 @@ export const EXERCISES: Exercise[] = [
   },
   {
     id: 'Dumbbell_Lunges',
+    stresses: ['knees'],
     name: 'Выпады с гантелями',
     pattern: 'lunge',
     loadType: 'dumbbell',
@@ -609,6 +633,7 @@ export const EXERCISES: Exercise[] = [
   },
   {
     id: 'Split_Squat_with_Dumbbells',
+    stresses: ['knees'],
     name: 'Сплит-приседания с гантелями',
     pattern: 'lunge',
     loadType: 'dumbbell',
@@ -626,6 +651,8 @@ export const EXERCISES: Exercise[] = [
   },
   {
     id: 'Step-up_with_Knee_Raise',
+    chair: { ok: true, tip: 'Только устойчивый стул без колёсиков, придвинутый к стене. Если стул высокий или шатается — выбери ступеньку.', steps: ['Придвинь крепкий стул к стене. Сиденье не должно качаться.', 'Поставь всю стопу на сиденье, корпус слегка наклони вперёд.', 'Встань на стул за счёт ноги на сиденье, вторую подними коленом вверх.', 'Медленно сойди назад той же ногой и повтори.'] },
+    stresses: ['knees'],
     name: 'Зашагивания на скамью',
     pattern: 'lunge',
     loadType: 'bodyweight',
@@ -643,6 +670,8 @@ export const EXERCISES: Exercise[] = [
   },
   {
     id: 'Dumbbell_Step_Ups',
+    chair: { ok: true, tip: 'С гантелями — только на очень устойчивом стуле у стены. Если сомневаешься, делай без веса или на ступеньке.', steps: ['Придвинь крепкий стул к стене. Возьми гантели в опущенные руки.', 'Поставь всю стопу на сиденье.', 'Поднимись на стул за счёт ноги на сиденье, не отталкиваясь нижней ногой.', 'Медленно сойди назад и повтори.'] },
+    stresses: ['knees'],
     name: 'Зашагивания с гантелями',
     pattern: 'lunge',
     loadType: 'dumbbell',
@@ -662,6 +691,7 @@ export const EXERCISES: Exercise[] = [
   // ───────────── Ноги: тазовое разгибание ─────────────
   {
     id: 'Stiff-Legged_Dumbbell_Deadlift',
+    stresses: ['back'],
     name: 'Румынская тяга с гантелями',
     pattern: 'hinge',
     loadType: 'dumbbell',
@@ -680,6 +710,7 @@ export const EXERCISES: Exercise[] = [
   },
   {
     id: 'Romanian_Deadlift',
+    stresses: ['back'],
     name: 'Румынская тяга со штангой',
     pattern: 'hinge',
     loadType: 'barbell',
@@ -698,6 +729,7 @@ export const EXERCISES: Exercise[] = [
   },
   {
     id: 'Barbell_Deadlift',
+    stresses: ['back', 'pressure'],
     name: 'Становая тяга',
     pattern: 'hinge',
     loadType: 'barbell',
@@ -715,6 +747,7 @@ export const EXERCISES: Exercise[] = [
   },
   {
     id: 'Band_Good_Morning',
+    stresses: ['back'],
     name: 'Наклоны с резинкой',
     pattern: 'hinge',
     loadType: 'band',
@@ -730,6 +763,7 @@ export const EXERCISES: Exercise[] = [
   },
   {
     id: 'Superman',
+    stresses: ['back', 'neck'],
     name: 'Супермен',
     pattern: 'hinge',
     loadType: 'bodyweight',
@@ -778,6 +812,7 @@ export const EXERCISES: Exercise[] = [
   },
   {
     id: 'Glute_Kickback',
+    stresses: ['wrists'],
     name: 'Отведение ноги назад на четвереньках',
     pattern: 'glutes',
     loadType: 'bodyweight',
@@ -794,6 +829,8 @@ export const EXERCISES: Exercise[] = [
   },
   {
     id: 'Barbell_Hip_Thrust',
+    chair: { ok: false },
+    stresses: ['back'],
     name: 'Ягодичный мост со штангой',
     pattern: 'glutes',
     loadType: 'barbell',
@@ -912,6 +949,7 @@ export const EXERCISES: Exercise[] = [
   // ───────────── Кор ─────────────
   {
     id: 'Plank',
+    stresses: ['wrists'],
     name: 'Планка',
     pattern: 'core',
     loadType: 'bodyweight',
@@ -946,6 +984,7 @@ export const EXERCISES: Exercise[] = [
   },
   {
     id: 'Crunches',
+    stresses: ['neck'],
     name: 'Скручивания',
     pattern: 'core',
     loadType: 'bodyweight',
@@ -994,6 +1033,7 @@ export const EXERCISES: Exercise[] = [
   },
   {
     id: 'Russian_Twist',
+    stresses: ['back'],
     name: 'Русские скручивания',
     pattern: 'core',
     loadType: 'bodyweight',
@@ -1009,6 +1049,7 @@ export const EXERCISES: Exercise[] = [
   },
   {
     id: 'Mountain_Climbers',
+    stresses: ['wrists', 'pressure'],
     name: 'Скалолаз',
     pattern: 'core',
     loadType: 'bodyweight',
@@ -1026,6 +1067,8 @@ export const EXERCISES: Exercise[] = [
   },
   {
     id: 'Flat_Bench_Lying_Leg_Raise',
+    chair: { ok: false },
+    stresses: ['back'],
     name: 'Подъём ног лёжа на скамье',
     pattern: 'core',
     loadType: 'bodyweight',
@@ -1041,6 +1084,7 @@ export const EXERCISES: Exercise[] = [
   },
   {
     id: 'Hanging_Leg_Raise',
+    stresses: ['back', 'shoulders', 'pressure'],
     name: 'Подъём ног в висе',
     pattern: 'core',
     loadType: 'bodyweight',
@@ -1072,6 +1116,15 @@ export const GEAR_LABELS: Record<Gear, string> = {
   bands: 'Резинки',
   bench: 'Скамья/стул',
 };
+
+export const LIMITATION_LABELS = {
+  knees: { title: 'Колени', hint: 'Без прыжков, выпадов и глубоких приседов со штангой' },
+  back: { title: 'Поясница и спина', hint: 'Без становой, тяг в наклоне и скручиваний' },
+  shoulders: { title: 'Плечи', hint: 'Без жимов над головой, отжиманий на брусьях и подтягиваний' },
+  wrists: { title: 'Запястья', hint: 'Меньше упоров на ладони: отжиманий, планки на руках' },
+  neck: { title: 'Шея', hint: 'Без скручиваний и штанги на плечах' },
+  pressure: { title: 'Давление или сердце', hint: 'Без прыжков, упражнений вниз головой и предельных весов' },
+} as const;
 
 export const LEVEL_LABELS = {
   beginner: 'Новичок',
